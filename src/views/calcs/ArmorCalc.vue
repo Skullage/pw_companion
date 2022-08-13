@@ -418,8 +418,8 @@ export default {
 }
 
 .btn {
-    width: 32px;
-    height: 32px;
+    width: 48px;
+    height: 48px;
     border: 1px solid transparent;
 
     img {

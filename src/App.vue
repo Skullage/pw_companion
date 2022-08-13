@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
     <error-message @close="errorIsVisible = false" v-if="errorIsVisible" :texts="errorText" />
-    <my-header />
+    <base-header />
     <router-view @error="errorIsVisible = $event.isVisible; errorText = $event.errors" />
     <footer class="footer">
     </footer>
@@ -9,7 +9,7 @@
 </template>
 <script>
 import ErrorMessage from '@/components/ErrorMessage.vue';
-import MyHeader from '@/components/MyHeader.vue';
+import BaseHeader from '@/components/BaseHeader.vue';
 
 export default {
     data() {
@@ -18,7 +18,7 @@ export default {
             errorText: [],
         };
     },
-    components: { ErrorMessage, MyHeader },
+    components: { ErrorMessage, BaseHeader },
 }
 </script>
 <style lang="scss">
@@ -34,12 +34,10 @@ html, body {
 	line-height: 1;
 }
 body {
-    // background: url(@/assets/bg1.jpg) no-repeat center/100%;
-    background-size: cover;
+
 }
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
-    text-align: center;
     color: #fff;
     height: 100%;
 }

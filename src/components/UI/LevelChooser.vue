@@ -56,7 +56,7 @@ import MyButton from '@/components/UI/MyButton.vue';
 <style lang="scss" scoped>
 
 .form__input {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 
     &-group {
         display: flex;
@@ -70,6 +70,8 @@ import MyButton from '@/components/UI/MyButton.vue';
         padding: 5px;
         border-radius: 5px;
         margin-bottom: 10px;
+        color: #fff;
+        text-align: center;
     }
 
     &-text {

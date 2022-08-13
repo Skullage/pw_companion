@@ -13,7 +13,7 @@
 
 <script>
     export default {
-        name: 'MyHeader'
+        name: 'BaseHeader'
     }
 </script>
 

@@ -9,11 +9,10 @@
             </option>
         </select>
         </div>
-
         <level-chooser :min=1 :max=9 :value=data.curLvl name="curLvl" @increaseValue="increaseValue('curLvl')" @decreaseValue="decreaseValue('curLvl')" label="Текущий уровень постройки"/>
         <level-chooser :min=2 :max=10 :value=data.reqLvl name="reqLvl" @increaseValue="increaseValue('reqLvl')" @decreaseValue="decreaseValue('reqLvl')" label="Необходимый уровень постройки"/>
         <div v-if="miniResultVisible">
-            <result-list :resources="resources" />
+            <result-list :resources="resources" style="color: #fff;" />
         </div>
     </form>
 </template>
@@ -34,7 +33,7 @@ export default {
                     metal: [0, 2400, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000],
                     wood: [0, 2400, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000],
                     cloth: [0, 2400, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000],
-                    money: [0, 0.4, 1.2, 1.8, 4.2, 8.8, 12, 16.2, 21.8, 27.6],
+                    money: [0, 400000, 1200000, 1800000, 4200000, 8800000, 12000000, 16200000, 21800000, 27600000],
                     houseLvl: [0, 3, 6, 9, 12, 15, 18, 21, 24, 27]
                 },
                 {
@@ -44,7 +43,7 @@ export default {
                     metal: [0, 15400, 23000, 28800, 36700, 44900, 55200, 64800, 79200, 91200],
                     wood: [0, 15400, 23000, 28800, 36700, 44900, 55200, 64800, 79200, 91200],
                     cloth: [0, 15400, 23000, 28800, 36700, 44900, 55200, 64800, 79200, 91200],
-                    money: [0, 6, 8.8, 10.6, 13.2, 16.2, 19.6, 23.4, 27.6, 32.2],
+                    money: [0, 6000000, 8800000, 10600000, 13200000, 16200000, 19600000, 23400000, 27600000, 32200000],
                     houseLvl: [0, 13, 15, 17, 19, 21, 23, 25, 27, 29]
                 },
                 {
@@ -54,7 +53,7 @@ export default {
                     metal: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
                     wood: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
                     cloth: [0, 4300, 8170, 12470, 20640, 33110, 49450, 70090, 95030, 123840],
-                    money: [0, 0.8, 1.4, 2.2, 6, 9.8, 12.2, 18.2, 23.4, 30.2],
+                    money: [0, 800000, 1400000, 2200000, 6000000, 9800000, 12200000, 18200000, 23400000, 30200000],
                     houseLvl: [0, 4, 7, 10, 13, 16, 19, 22, 25, 28]
                 },
                 {
@@ -64,7 +63,7 @@ export default {
                     metal: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
                     wood: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
                     cloth: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
-                    money: [0, 0.8, 1.4, 2.2, 6, 9.8, 12.2, 18.2, 23.4, 30.2],
+                    money: [0, 800000, 1400000, 2200000, 6000000, 9800000, 12200000, 18200000, 23400000, 30200000],
                     houseLvl: [0, 4, 7, 10, 13, 16, 19, 22, 25, 28]
                 },
                 {
@@ -74,7 +73,7 @@ export default {
                     metal: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
                     wood: [0, 4300, 8170, 12470, 20640, 33110, 49450, 70090, 95030, 123840],
                     cloth: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
-                    money: [0, 0.8, 1.4, 2.2, 6, 9.8, 12.2, 18.2, 23.4, 30.2],
+                    money: [0, 800000, 1400000, 2200000, 6000000, 9800000, 12200000, 18200000, 23400000, 30200000],
                     houseLvl: [0, 4, 7, 10, 13, 16, 19, 22, 25, 28]
                 },
                 {
@@ -84,7 +83,7 @@ export default {
                     metal: [0, 4300, 8170, 12470, 20640, 33110, 49450, 70090, 95030, 123840],
                     wood: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
                     cloth: [0, 1900, 3610, 5510, 9120, 14630, 21850, 30970, 41990, 54720],
-                    money: [0, 0.8, 1.4, 2.2, 6, 9.8, 12.2, 18.2, 23.4, 30.2],
+                    money: [0, 800000, 1400000, 2200000, 6000000, 9800000, 12200000, 18200000, 23400000, 30200000],
                     houseLvl: [0, 4, 7, 10, 13, 16, 19, 22, 25, 28]
                 },
                 {
@@ -94,7 +93,7 @@ export default {
                     metal: [0, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000, 91200],
                     wood: [0, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000, 91200],
                     cloth: [0, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000, 91200],
-                    money: [0, 0.8, 1.4, 2.2, 6, 9.8, 13.2, 18.2, 23.4, 30.2],
+                    money: [0, 800000, 1400000, 2200000, 6000000, 9800000, 12200000, 18200000, 23400000, 30200000],
                     houseLvl: [0, 4, 7, 10, 13, 16, 19, 22, 25, 28]
                 },
                 {
@@ -104,19 +103,19 @@ export default {
                     metal: [0, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000, 91200],
                     wood: [0, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000, 91200],
                     cloth: [0, 4800, 7200, 12000, 19200, 28800, 40800, 55200, 72000, 91200],
-                    money: [0, 0.8, 1.4, 2.2, 6, 9.8, 13.2, 18.2, 23.4, 30.2],
+                    money: [0, 800000, 1400000, 2200000, 6000000, 9800000, 12200000, 18200000, 23400000, 30200000],
                     houseLvl: [0, 4, 7, 10, 13, 16, 19, 22, 25, 28]
                 },
             ],
-            resources: {
-                food: 0,
-                stone: 0,
-                metal: 0,
-                wood: 0,
-                cloth: 0,
-                money: 0,
-                houseLvl: 0,
-            },
+            resources: [
+                {title: 'Еда', value: 0, href: 'calcs/house/food.png'},
+                {title: 'Камень', value: 0, href: 'calcs/house/stone.png'},
+                {title: 'Металл', value: 0, href: 'calcs/house/metal.png'},
+                {title: 'Дерево', value: 0, href: 'calcs/house/wood.png'},
+                {title: 'Ткань', value: 0, href: 'calcs/house/cloth.png'},
+                {title: 'Серебро', value: 0, href: 'calcs/house/silver.png'},
+                {title: 'Уровень дома', value: 0},
+            ],
             selected: this.data.selected,
             errorText: [],
         };
@@ -129,28 +128,25 @@ export default {
     },
     methods: {
         reset() {
-            this.resources.food = 0;
-            this.resources.stone = 0;
-            this.resources.metal = 0;
-            this.resources.wood = 0;
-            this.resources.cloth = 0;
-            this.resources.money = 0;
+            this.resources.forEach(el => {
+                el.value = 0;
+            });
             this.errorText = [];
         },
         calculate() {
             if(!this.isEmpty(this.selected)) {
                 this.reset();
                 for (let i = this.data.curLvl - 1; i <= this.data.reqLvl - 1; i++) {
-                    this.resources.food += this.selected.food[i];
-                    this.resources.stone += this.selected.stone[i];
-                    this.resources.metal += this.selected.metal[i];
-                    this.resources.wood += this.selected.wood[i];
-                    this.resources.cloth += this.selected.cloth[i];
-                    this.resources.money += this.selected.money[i];
+                    this.resources[0].value += this.selected.food[i];
+                    this.resources[1].value += this.selected.stone[i];
+                    this.resources[2].value += this.selected.metal[i];
+                    this.resources[3].value += this.selected.wood[i];
+                    this.resources[4].value += this.selected.cloth[i];
+                    this.resources[5].value += this.selected.money[i];
                 };
-                this.resources.houseLvl = +this.selected.houseLvl[this.data.reqLvl - 1];
+                this.resources[6].value = +this.selected.houseLvl[this.data.reqLvl - 1];
                 this.$emit('error', {isVisible: false});
-                this.$emit('calculate', {id: this.id, food: this.resources.food, stone: this.resources.stone, metal: this.resources.metal, wood: this.resources.wood, cloth: this.resources.cloth, money: this.resources.money, houseLvl: this.resources.houseLvl,});
+                this.$emit('calculate', {id: this.id, resources: this.resources});
             }
         },
         removeForm() {
@@ -221,7 +217,7 @@ export default {
 
     &__select {
         appearance: none;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         background-color: transparent;
         border: none;
         border-bottom: 1px solid #fff;

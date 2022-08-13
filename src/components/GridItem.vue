@@ -63,10 +63,12 @@
 .grid__title {
     padding: 10px 0;
     background-color: rgba(0, 0, 0, .5);
+    text-align: center;
 }
 
 .grid__desc {
     padding: 10px 0;
     background-color: rgba(0, 0, 0, .5);
+    text-align: center;
 }
 </style>

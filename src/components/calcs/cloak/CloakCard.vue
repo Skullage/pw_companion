@@ -230,6 +230,16 @@ import MyButton from '@/components/UI/MyButton.vue';
             gap: 10px;
             align-items: center;
 
+            &__icon {
+                width: 32px;
+                height: 32px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
             &__info {
                 text-align: left;
             }
