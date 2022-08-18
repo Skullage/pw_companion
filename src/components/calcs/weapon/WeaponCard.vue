@@ -2,15 +2,15 @@
     <div class="card">
         <div class="card__header">
             <h2 class="card__title">
-                {{weapons[id].title}}
+                {{items[id].title}}
             </h2>
-            <my-button class="card__btn" :class="{card__btn__active: weapons[id].isActive}" @click="selectGrade" v-if="id != weapons.length - 1">У меня этот грейд</my-button>
+            <base-button class="card__btn" :class="{card__btn__active: items[id].isActive}" @click="selectGrade" v-if="id != items.length - 1">У меня этот грейд</base-button>
         </div>
         <div class="card__content" v-if="id > grade">
             <div class="card__col">
                 <h3 class="card__col-title">Необходимые ресурсы</h3>
                 <ul class="card__resList">
-                    <li class="card__resList-item" v-for="(res, index) in weapons[id].reqResources" :key="index">
+                    <li class="card__resList-item" v-for="(res, index) in items[id].reqResources" :key="index">
                         <div class="card__resList-item__icon">
                             <img :src="require(`@/assets/images/` + resources[resources.findIndex(item => item.title == res.title)].href)" :alt="res.title">
                         </div>
@@ -24,7 +24,7 @@
             <div class="card__col" v-if="id - grade == 1">
                 <h3 class="card__col-title">Осталось нафармить</h3>
                 <ul class="card__resList">
-                    <li class="card__resList-item" v-for="(res, index) in weapons[id].reqResources" :key="index">
+                    <li class="card__resList-item" v-for="(res, index) in items[id].reqResources" :key="index">
                         <div class="card__resList-item__icon">
                             <img :src="require(`@/assets/images/` + resources[resources.findIndex(item => item.title == res.title)].href)" :alt="res.title">
                         </div>
@@ -38,7 +38,7 @@
             <div class="card__col" v-if="id - grade != 1">
                 <h3 class="card__col-title">Осталось нафармить с вашего грейда</h3>
                 <ul class="card__resList">
-                    <li class="card__resList-item" v-for="(res, index) in weapons[id].reqResources" :key="index">
+                    <li class="card__resList-item" v-for="(res, index) in items[id].reqResources" :key="index">
                         <div class="card__resList-item__icon">
                             <img :src="require(`@/assets/images/` + resources[resources.findIndex(item => item.title == res.title)].href)" :alt="res.title">
                         </div>
@@ -46,7 +46,7 @@
                             <h3 class="card__resList-item__title">{{res.title}}</h3> 
                             <p class="card__resList-item__value">
                                 {{
-                                    (isWeaponIdLetter[isWeaponIdLetter.findIndex(item => item.title == res.title)].value - resources[resources.findIndex(item => item.title == res.title)].value).toLocaleString()
+                                    (totalResources[totalResources.findIndex(item => item.title == res.title)].value - resources[resources.findIndex(item => item.title == res.title)].value).toLocaleString()
                                 }}
                             </p>
                         </div>
@@ -58,17 +58,17 @@
 </template>
 
 <script>
-import MyButton from '@/components/UI/MyButton.vue';
+import BaseButton from '@/components/UI/BaseButton.vue';
 
     export default {
         props: {
             id: Number,
-            weapons: Object,
+            items: Object,
             resources: Object,
             grade: Number,
         },
         components: {
-            MyButton,
+            BaseButton,
         },
         methods: {
             selectGrade() {
@@ -76,7 +76,7 @@ import MyButton from '@/components/UI/MyButton.vue';
             },
         },
         computed: {
-            isWeaponIdLetter: function() {
+            totalResources: function() {
                 this.totalReqRes = [
                     {title: 'Кровавый камень', value: 0},
                     {title: 'Огненный камень', value: 0},
@@ -87,7 +87,7 @@ import MyButton from '@/components/UI/MyButton.vue';
                     {title: 'Серебро', value: 0},
                 ];
                 for(this.counter = this.grade + 1; this.counter <= this.id; this.counter++) {
-                    this.weapons[this.counter].reqResources.forEach(el => {
+                    this.items[this.counter].reqResources.forEach(el => {
                         this.totalReqRes[this.totalReqRes.findIndex(item => item.title == el.title)].value += el.value;
                     })
                 }

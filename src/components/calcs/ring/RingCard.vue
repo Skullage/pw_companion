@@ -4,7 +4,7 @@
             <h2 class="card__title">
                 {{items[id].title}}
             </h2>
-            <my-button class="card__btn" :class="{card__btn__active: items[id].isActive}" @click="selectGrade" v-if="id != items.length - 1">У меня этот грейд</my-button>
+            <base-button class="card__btn" :class="{card__btn__active: items[id].isActive}" @click="selectGrade" v-if="id != items.length - 1">У меня этот грейд</base-button>
         </div>
         <div class="card__content" v-if="id > grade">
             <div class="card__col">
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import MyButton from '@/components/UI/MyButton.vue';
+import BaseButton from '@/components/UI/BaseButton.vue';
 
     export default {
         props: {
@@ -96,7 +96,7 @@ import MyButton from '@/components/UI/MyButton.vue';
             grade: Number,
         },
         components: {
-            MyButton,
+            BaseButton,
         },
         methods: {
             selectGrade() {

@@ -3,21 +3,13 @@
     <div class="container">
         <div class="content-wrap__inner">
             <main class="main">
-                <weapon-card v-for="(weapon, index) in weapons" @selectGrade="selectGrade" :weapons="weapons" :resources="resources" :key="index" :id="index" :grade="grade" />
+                <weapon-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" />
             </main>
             <aside class="sidebar">
                 <h2 class="sidebar__title">
                     Ресурсы в наличии
                 </h2>
-                <label class="sidebar__input-block" v-for="(res, index) in resources" :key="index">
-                    <div class="sidebar__input-block-icon">
-                        <img :src="require(`@/assets/images/` + res.href)" :alt="res.title">
-                    </div>
-                    <div class="sidebar__input-block-info">
-                        <h3 class="sidebar__input-block-title">{{res.title}}</h3>
-                        <input class="sidebar__input" type="number" @input="remember" v-model="res.value" placeholder="0">
-                    </div>
-                </label>
+                <sidebar-input v-for="(res, index) in resources" @remember="remember" :resource="res" :key="index" />
             </aside>
         </div>
     </div>
@@ -26,14 +18,12 @@
 
 <script>
 import WeaponCard from '@/components/calcs/weapon/WeaponCard.vue';
+import SidebarInput from '@/components/UI/SidebarInput.vue';
 
 export default {
     data() {
         return {
-            resources: localStorage.getItem('weaponResources') != undefined ? 
-            JSON.parse(localStorage.getItem('weaponResources'))
-            :
-            [
+            resources: [
                 {title: 'Кровавый камень', value: '', href: 'calcs/weapon/bloodstone.png'},
                 {title: 'Огненный камень', value: '', href: 'calcs/weapon/firestone.png'},
                 {title: 'Небесная яшма', value: '', href: 'calcs/weapon/jasper.png'},
@@ -43,7 +33,7 @@ export default {
                 {title: 'Серебро', value: '', href: 'calcs/house/silver.png'},
             ],
             grade: 0,
-            weapons: [
+            items: [
                 {
                     id: 0,
                     title: 'Базовый',
@@ -103,22 +93,25 @@ export default {
         };
     },
     methods: {
-        error(event) {
-            this.$emit('error', event);
-        },
         remember() {
             localStorage.setItem('weaponResources', JSON.stringify(this.resources));
         },
         selectGrade(event) {
             this.grade = event;
-            this.weapons.forEach(el => {
+            this.items.forEach(el => {
                 el.isActive = false;
             })
-            this.weapons[event].isActive = true;
+            this.items[event].isActive = true;
+        }
+    },
+    mounted() {
+        if(localStorage.weaponResources) {
+            this.resources = JSON.parse(localStorage.getItem('weaponResources'));
         }
     },
     components: {
         WeaponCard,
+        SidebarInput,
     }
 }
 </script>
@@ -146,66 +139,9 @@ export default {
     padding: 10px 20px;
     border-left: 1px solid #000;
 
-    &__input-block {
-        width: 100%;
-        margin-bottom: 10px;
-        display: flex;
-        gap: 10px;
-        background-color: #fff;
-        align-items: center;
-        height: 50px;
-        border: 1px solid black;
-        border-radius: 5px;
-
-        &:focus-within {
-            border: 1px solid red!important;
-        }
-
-        &-icon {
-            width: 50px;
-            height: 100%;
-            flex-shrink: 0;
-            display: block;
-
-            img {
-                width: 50px;
-                height: 100%;
-            }
-        }
-
-        &-info {
-            text-align: left;
-        }
-
-        &-title {
-            font-size: 14px;
-            font-weight: 400;
-            color: #000;
-            margin-left: 5px;
-        }
-    }
-
     &__title {
         color: #000;
         margin-bottom: 10px;
-    }
-
-    &__input {
-        padding: 5px 5px;
-        margin-right: 10px;
-        appearance: none;
-        -moz-appearance: textfield;
-        outline: none;
-
-        &:hover, &:focus {
-            appearance: none;
-            -moz-appearance: number-input;
-        }
-        
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-        }
     }
 
     @media (max-width: 830px) {

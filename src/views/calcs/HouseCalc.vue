@@ -4,7 +4,7 @@
         <div class="content-wrap__inner">
             <main class="main">
                 <div class="grid">
-                    <calc-form @calculate="calculate" @increaseValue="increaseValue" @decreaseValue="decreaseValue" @removeForm="removeForm" @switch="changeSelect" @error="error" v-for="form in forms" :key="form.id" :id="form.id" :data="form.data" :whitelist="whitelist" :miniResultVisible="forms.length > 1" />
+                    <calc-form @calculate="calculate" @increaseValue="increaseValue" @decreaseValue="decreaseValue" @removeForm="removeForm" @switch="changeSelect" v-for="form in forms" :key="form.id" :id="form.id" :data="form.data" :whitelist="whitelist" :miniResultVisible="forms.length > 1" />
                     <calc-form-empty @addForm="addForm" v-if="forms.length < 8" />
                 </div>
             </main>
@@ -34,9 +34,7 @@ export default {
                 {title: 'Серебро', value: 0, href: 'calcs/house/silver.png'},
                 {title: 'Уровень дома', value: 0},
             ],
-            forms: localStorage.getItem('forms') != undefined 
-            ? JSON.parse(localStorage.getItem('forms')) 
-            : [
+            forms: [
                 {
                     id: Date.now(), 
                     data: {
@@ -55,7 +53,7 @@ export default {
                     ],
                 },
               ],
-            whitelist: localStorage.getItem('whitelist') != undefined ? JSON.parse(localStorage.getItem('whitelist')) : [],
+            whitelist: [],
         };
     },
     methods: {
@@ -63,7 +61,7 @@ export default {
             this.resources.forEach(el => {
                 el.value = 0;
             });
-            this.errorText = [];
+            this.$store.commit('error/clearErrorText');
         },
         calculate(event) {
             this.forms[this.forms.findIndex(item => item.id == event.id)].resources[0].value = event.resources[0].value;
@@ -86,9 +84,6 @@ export default {
                 this.resources[5].value  += el.resources[5].value;
                 this.resources[6].value < el.resources[6].value ? this.resources[6].value = el.resources[6].value : this.resources[6].value;
             })
-        },
-        error(event) {
-            this.$emit('error', event);
         },
         addForm() {
             this.forms.push(
@@ -133,6 +128,14 @@ export default {
         decreaseValue(event) {
             this.forms[this.forms.findIndex(item => item.id == event.id)].data[event.param] -= 1;
             localStorage.setItem('forms', JSON.stringify(this.forms));
+        }
+    },
+    mounted() {
+        if(localStorage.whitelist) {
+            this.whitelist = JSON.parse(localStorage.getItem('whitelist'));
+        }
+        if(localStorage.forms) {
+            this.forms = JSON.parse(localStorage.getItem('forms'));
         }
     },
     components: { 

@@ -2,7 +2,7 @@
     <header class="header">
         <div class="container">
             <div class="header__inner">
-                <router-link class="logo" :to="{name: 'home'}">Skullage</router-link>
+                <router-link class="logo" :to="{name: 'home'}">PW Companion</router-link>
                 <nav class="nav">
                     <router-link class="nav__link" :to="{name: 'calc'}">Калькуляторы</router-link>
                 </nav>

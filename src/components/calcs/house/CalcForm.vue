@@ -19,7 +19,6 @@
 
 <script>
 import LevelChooser from '@/components/UI/LevelChooser.vue';
-import MyButton from '@/components/UI/MyButton.vue';
 import ResultList from '@/components/calcs/house/ResultList.vue';
 
 export default {
@@ -117,7 +116,6 @@ export default {
                 {title: 'Уровень дома', value: 0},
             ],
             selected: this.data.selected,
-            errorText: [],
         };
     },
     props: {
@@ -131,7 +129,6 @@ export default {
             this.resources.forEach(el => {
                 el.value = 0;
             });
-            this.errorText = [];
         },
         calculate() {
             if(!this.isEmpty(this.selected)) {
@@ -145,7 +142,6 @@ export default {
                     this.resources[5].value += this.selected.money[i];
                 };
                 this.resources[6].value = +this.selected.houseLvl[this.data.reqLvl - 1];
-                this.$emit('error', {isVisible: false});
                 this.$emit('calculate', {id: this.id, resources: this.resources});
             }
         },
@@ -191,7 +187,6 @@ export default {
     },
     components: { 
         LevelChooser, 
-        MyButton,
         ResultList, 
     }
 }

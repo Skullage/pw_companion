@@ -29,6 +29,7 @@
 
     &__content {
         display: flex;
+        align-items: center;
         gap: 20px;
     }
 
@@ -39,13 +40,13 @@
         img {
             width: 100%;
             height: auto;
-            object-fit: cover;
         }
     }
 
     &__title {
         font-size: 16px;
         font-weight: 400;
+        margin-bottom: 5px;
     }
     &__value {
         font-size: 14px;

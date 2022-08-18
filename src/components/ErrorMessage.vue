@@ -1,7 +1,7 @@
 <template>
     <div class="error">
         <div class="error__group">
-            <p class="error__text" v-for="(text, index) in texts" :key="index" :value="text">
+            <p class="error__text" v-for="(text, index) in $store.state.error.errorText" :key="index" :value="text">
                 <span class="error__title">ОШИБКА!</span> {{text}}
             </p>
         </div>
@@ -12,12 +12,9 @@
 <script>
     export default {
         name: 'ErrorMessage',
-        props: {
-            texts: Array,
-        },
         methods: {
             close() {
-                this.$emit('close');
+                this.$store.commit('error/clearErrorText');
             }
         }
     }

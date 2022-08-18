@@ -3,7 +3,7 @@
     <div class="container">
         <div class="content-wrap__inner">
             <main class="main">
-                <armor-card v-for="(armor, index) in armors" @selectGrade="selectGrade" :armors="armors" :resources="resources" :key="index" :id="index" :grade="grade" :type="type" />
+                <armor-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" :type="type" />
             </main>
             <aside class="sidebar">
                 <h2 class="sidebar__title">
@@ -18,15 +18,7 @@
                 <h2 class="sidebar__title">
                     Ресурсы в наличии
                 </h2>
-                <label class="sidebar__input-block" v-for="(res, index) in armors[type][3].reqResources" :key="index">
-                    <div class="sidebar__input-block-icon">
-                        <img :src="require(`@/assets/images/` + resources[resources.findIndex(function getId(item) { return item.title == res.title})].href)" :alt="res.title">
-                    </div>
-                    <div class="sidebar__input-block-info">
-                        <h3 class="sidebar__input-block-title">{{res.title}}</h3>
-                        <input class="sidebar__input" type="number" @input="remember" v-model="resources[resources.findIndex(function getId(item) { return item.title == res.title})].value" placeholder="0">
-                    </div>
-                </label>
+                <sidebar-input v-for="(res, index) in getSidebarRes" @remember="remember" :resource="res" :key="index" />
             </aside>
         </div>
     </div>
@@ -35,14 +27,12 @@
 
 <script>
 import ArmorCard from '@/components/calcs/armor/ArmorCard.vue';
+import SidebarInput from '@/components/UI/SidebarInput.vue';
 
 export default {
     data() {
         return {
-            resources: localStorage.getItem('armorResources') != undefined ? 
-            JSON.parse(localStorage.getItem('armorResources'))
-            :
-            [
+            resources: [
                 {title: 'Печатка сумерек', value: '', href: 'calcs/armor/signet.png'},
                 {title: 'Зола мира грез', value: '', href: 'calcs/armor/ash.png'},
                 {title: 'Лезвие демона', value: '', href: 'calcs/armor/blade.png'},
@@ -65,7 +55,7 @@ export default {
                 {title: 'Золото', value: '', href: 'calcs/house/silver.png'},
             ],
             grade: 0,
-            armors: [
+            items: [
                 [
                     {
                         id: 0,
@@ -291,28 +281,40 @@ export default {
         };
     },
     methods: {
-        error(event) {
-            this.$emit('error', event);
-        },
         remember() {
             localStorage.setItem('armorResources', JSON.stringify(this.resources));
         },
         selectGrade(event) {
             this.grade = event;
-            if(event == 0 && this.armors[this.type][0].isActive) {
-                this.armors[this.type].forEach(el => {
+            if(event == 0 && this.items[this.type][0].isActive) {
+                this.items[this.type].forEach(el => {
                     el.isActive = false;
                 })
             } else {
-                this.armors[this.type].forEach(el => {
+                this.items[this.type].forEach(el => {
                     el.isActive = false;
                 })
-                this.armors[this.type][event].isActive = true;
+                this.items[this.type][event].isActive = true;
             }
         }
     },
+    mounted() {
+        if(localStorage.armorResources) {
+            this.resources = JSON.parse(localStorage.getItem('armorResources'));
+        }
+    },
+    computed: {
+        getSidebarRes() {
+            let sidebarRes = [];
+            this.items[this.type][3].reqResources.forEach(el => {
+                sidebarRes.push(this.resources.find(item => item.title == el.title));
+            })
+            return sidebarRes;
+        },
+    },
     components: {
         ArmorCard,
+        SidebarInput,
     }
 }
 </script>

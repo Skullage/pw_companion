@@ -2,18 +2,18 @@
     <div class="form__input">
       <label class="form__input-label" v-if="label">{{label}}</label>
       <div class="form__input-group">
-        <my-button @click="decreaseValue" class="form__input-btn">-</my-button>
+        <base-button @click="decreaseValue" class="form__input-btn">-</base-button>
         <span class="form__input-text">{{value}}</span>
-        <my-button @click="increaseValue" class="form__input-btn">+</my-button>
+        <base-button @click="increaseValue" class="form__input-btn">+</base-button>
         
       </div>
     </div>
 </template>
 
 <script>
-import MyButton from '@/components/UI/MyButton.vue';
+import BaseButton from '@/components/UI/BaseButton.vue';
     export default {
-        components: { MyButton },
+        components: { BaseButton },
         name: 'LevelChooser',
         props: {
             label: {

@@ -2,15 +2,15 @@
     <div class="card">
         <div class="card__header">
             <h2 class="card__title">
-                {{cloaks[id].title}}
+                {{items[id].title}}
             </h2>
-            <my-button class="card__btn" :class="{card__btn__active: cloaks[id].isActive}" @click="selectGrade" v-if="id != cloaks.length - 1">У меня этот грейд</my-button>
+            <base-button class="card__btn" :class="{card__btn__active: items[id].isActive}" @click="selectGrade" v-if="id != items.length - 1">У меня этот грейд</base-button>
         </div>
         <div class="card__content" v-if="id > grade">
             <div class="card__col">
                 <h3 class="card__col-title">Необходимые ресурсы</h3>
                 <ul class="card__resList">
-                    <li class="card__resList-item" v-for="(res, index) in cloaks[id].reqResources" :key="index">
+                    <li class="card__resList-item" v-for="(res, index) in items[id].reqResources" :key="index">
                         <div class="card__resList-item__icon">
                             <img :src="require(`@/assets/images/` + resources[resources.findIndex(item => item.title == res.title)].href)" :alt="res.title">
                         </div>
@@ -24,7 +24,7 @@
             <div class="card__col" v-if="id - grade == 1">
                 <h3 class="card__col-title">Осталось нафармить</h3>
                 <ul class="card__resList">
-                    <li class="card__resList-item" v-for="(res, index) in cloaks[id].reqResources" :key="index">
+                    <li class="card__resList-item" v-for="(res, index) in items[id].reqResources" :key="index">
                         <div class="card__resList-item__icon">
                             <img :src="require(`@/assets/images/` + resources[resources.findIndex(item => item.title == res.title)].href)" :alt="res.title">
                         </div>
@@ -61,7 +61,7 @@
             <div class="card__col" v-if="id - grade != 1">
                 <h3 class="card__col-title">Осталось нафармить с вашего грейда</h3>
                 <ul class="card__resList">
-                    <li class="card__resList-item" v-for="(res, index) in cloaks[id].reqResources" :key="index">
+                    <li class="card__resList-item" v-for="(res, index) in items[id].reqResources" :key="index">
                         <div class="card__resList-item__icon">
                             <img :src="require(`@/assets/images/` + resources[resources.findIndex(item => item.title == res.title)].href)" :alt="res.title">
                         </div>
@@ -104,17 +104,17 @@
 </template>
 
 <script>
-import MyButton from '@/components/UI/MyButton.vue';
+import BaseButton from '@/components/UI/BaseButton.vue';
 
     export default {
         props: {
             id: Number,
-            cloaks: Object,
+            items: Object,
             resources: Object,
             grade: Number,
         },
         components: {
-            MyButton,
+            BaseButton,
         },
         methods: {
             selectGrade() {
@@ -134,7 +134,7 @@ import MyButton from '@/components/UI/MyButton.vue';
                     {title: 'Серебро', value: 0},
                 ];
                 for(this.counter = this.grade + 1; this.counter <= this.id; this.counter++) {
-                    this.cloaks[this.counter].reqResources.forEach(el => {
+                    this.items[this.counter].reqResources.forEach(el => {
                         if(this.resources[this.resources.findIndex(item => item.title == el.title)].price != undefined) {
                             this.totalReqRes[0].value += (el.value - this.resources[this.resources.findIndex(item => item.title == el.title)].value) * this.resources[this.resources.findIndex(item => item.title == el.title)].price.sandClock;
                             this.totalReqRes[1].value += (el.value - this.resources[this.resources.findIndex(item => item.title == el.title)].value) * this.resources[this.resources.findIndex(item => item.title == el.title)].price.sunClock;
@@ -161,7 +161,7 @@ import MyButton from '@/components/UI/MyButton.vue';
                     {title: 'Звездная пряжа', value: 0},
                     {title: 'Серебро', value: 0},
                 ];
-                this.cloaks[this.id].reqResources.forEach(el => {
+                this.items[this.id].reqResources.forEach(el => {
                     if(this.resources[this.resources.findIndex(item => item.title == el.title)].price != undefined) {
                         this.leftReqRes[0].value += (el.value - this.resources[this.resources.findIndex(item => item.title == el.title)].value) * this.resources[this.resources.findIndex(item => item.title == el.title)].price.sandClock;
                         this.leftReqRes[1].value += (el.value - this.resources[this.resources.findIndex(item => item.title == el.title)].value) * this.resources[this.resources.findIndex(item => item.title == el.title)].price.sunClock;
