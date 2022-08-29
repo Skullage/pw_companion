@@ -1,13 +1,20 @@
 <template>
     <header class="header">
-        <div class="container">
-            <div class="header__inner">
-                <router-link class="logo" :to="{name: 'home'}">PW Companion</router-link>
-                <nav class="nav">
-                    <router-link class="nav__link" :to="{name: 'calc'}">Калькуляторы</router-link>
-                </nav>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-light mb-3">
+            <div class="container">
+                <router-link class="navbar-brand" :to="{name: 'home'}">PW Companion</router-link>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <router-link class="nav-link" aria-current="page" :to="{name: 'calc'}">Калькуляторы</router-link>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </nav>
     </header>
 </template>
 
@@ -16,58 +23,3 @@
         name: 'BaseHeader'
     }
 </script>
-
-<style lang="scss" scoped>
-.header {
-    &__inner {
-        min-height: 50px;
-        background-color: transparent;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #000;
-
-        @media (max-width: 375px) {
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-    }
-}
-
-.nav {
-    display: flex;
-    gap: 10px;
-    list-style: none;
-
-    &__link {
-        color: #000;
-        text-transform: uppercase;
-        cursor: pointer;
-        text-decoration: none;
-        font-weight: 700;
-
-        &:hover {
-            color: #0cf31d;
-        }
-
-        &.router-link-active {
-            color: #1ee145;
-            border-bottom: 3px solid #1ee145;
-        }
-    }
-}
-
-.logo {
-    cursor: pointer;
-    color: #000;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 30px;
-
-    &:hover {
-        color: #0cf31d;
-    }
-}
-</style>

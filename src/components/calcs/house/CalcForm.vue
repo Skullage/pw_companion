@@ -1,18 +1,19 @@
 <template>
-    <form class="form" @submit.prevent>
-        <button class="form__close" @click="removeForm">&#10006;</button>
-        <div class="form__select-wrapper">
-            <select class="form__select" v-model="selected" required>
-            <option class="form__option" :value={} disabled>Выберите строение</option>
-            <option class="form__option" v-for="(house, index) in filterSelect" :key="index" :value="house">
-                {{house.name}}
-            </option>
-        </select>
+    <form class="form p-4 pt-5 rounded position-relative" @submit.prevent>
+        <button class="form__close pt-2 pe-2 text-white border-0 bg-transparent position-absolute top-0 end-0" @click="removeForm">&#10006;</button>
+        <div class="form-floating mb-2">
+            <select class="form-select" id="floatingSelect" v-model="selected" required>
+                <option class="form__option" :value={} disabled>Выберите строение</option>
+                <option class="form__option" v-for="(house, index) in filterSelect" :key="index" :value="house">
+                    {{house.name}}
+                </option>
+            </select>
+            <label for="floatingSelect">Строение</label>
         </div>
         <level-chooser :min=1 :max=9 :value=data.curLvl name="curLvl" @increaseValue="increaseValue('curLvl')" @decreaseValue="decreaseValue('curLvl')" label="Текущий уровень постройки"/>
         <level-chooser :min=2 :max=10 :value=data.reqLvl name="reqLvl" @increaseValue="increaseValue('reqLvl')" @decreaseValue="decreaseValue('reqLvl')" label="Необходимый уровень постройки"/>
         <div v-if="miniResultVisible">
-            <result-list :resources="resources" style="color: #fff;" />
+            <result-list :resources="resources" />
         </div>
     </form>
 </template>
@@ -194,63 +195,10 @@ export default {
 <style lang="scss" scoped>
 .form {
     background-color: rgba(0, 0, 0, .7);
-    padding: 40px 20px 20px;
-    border-radius: 15px;
-    position: relative;
 
     &__close {
-        position: absolute;
-        right: 0;
-        top: 0;
-        background-color: transparent;
-        color: #fff;
         font-size: 25px;
-        padding-top: 5px;
-        padding-right: 10px;
         cursor: pointer;
-    }
-
-    &__select {
-        appearance: none;
-        margin-bottom: 20px;
-        background-color: transparent;
-        border: none;
-        border-bottom: 1px solid #fff;
-        color: #fff;
-        padding: 5px;
-        outline: none;
-        cursor: pointer;
-        font-size: 20px;
-        width: 100%;
-        
-        
-        &-wrapper {
-            position: relative;
-
-            &::after {
-                content: "";
-                width: 12px;
-                height: 8px;
-                background-color: #fff;
-                clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-                position: absolute;
-                right: 0;
-                top: 50%;
-                margin-top: -6px;
-                pointer-events: none;
-            }
-        }
-    }
-
-    &__option {
-        color: #fff;
-        background-color: #000;
-    }
-
-    &__btn {
-        width: 100%;
-        height: 30px;
-        text-transform: uppercase;
     }
 }
 </style>

@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             resources: [
-                {title: 'Медаль Авроры', value: '', href: 'calcs/ring/medal.png'},
+                {title: 'Медаль Авроры', value: '', price: 1, href: 'calcs/ring/medal.png'},
                 {title: 'Звездный кварц', value: '', price: 20, href: 'calcs/ring/quartz.png'},
                 {title: 'Звездный изумруд', value: '', price: 150, href: 'calcs/ring/emerald.png'},
                 {title: 'Звездный рубин', value: '', price: 1000, href: 'calcs/ring/ruby.png'},

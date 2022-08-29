@@ -1,17 +1,29 @@
 <template>
-<div class="content-wrap">
-    <div class="container">
-        <div class="content-wrap__inner">
-            <main class="main">
-                <weapon-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" />
-            </main>
-            <aside class="sidebar">
-                <h2 class="sidebar__title">
+<div class="container">
+    <div class="row">
+        <main class="main">
+            <button class="btn btn_icon btn-primary position-fixed top-50 end-0"  @click.prevent="showOffcanvasMenu()" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+            </button>
+            <weapon-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" />
+        </main>
+        <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header">
+                <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
+                    Домопуха
+                </h4>
+                <button type="button" class="btn-close" @click="isShowSidebar = false" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu()"></button>
+            </div>
+            <div class="offcanvas-body">
+                <h5 class="sidebar__title text-center">
                     Ресурсы в наличии
-                </h2>
-                <sidebar-input v-for="(res, index) in resources" @remember="remember" :resource="res" :key="index" />
-            </aside>
-        </div>
+                </h5>
+                    <sidebar-input v-for="(res, index) in resources" @remember="remember" :resource="res" :key="index" />
+            </div>
+        </aside>
     </div>
 </div>
 </template>
@@ -89,7 +101,8 @@ export default {
                     ],
                     isActive: false,
                 },
-            ]
+            ],
+            showMenu: true
         };
     },
     methods: {
@@ -102,6 +115,9 @@ export default {
                 el.isActive = false;
             })
             this.items[event].isActive = true;
+        },
+        showOffcanvasMenu(){
+            this.showMenu ? this.showMenu = false : this.showMenu = true;
         }
     },
     mounted() {
@@ -116,36 +132,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.content-wrap {
-    flex: 1 1 auto;
-
-    &__inner {
-        display: flex;
-        gap: 50px;
-
-        @media (max-width: 830px) {
-            flex-wrap: wrap;
-        }
-    }
-}
-
-.main {
-    flex: 1 1 75%;
-    padding: 40px 20px;
-    color: #000;
-}
-
-.sidebar {
-    padding: 10px 20px;
-    border-left: 1px solid #000;
-
-    &__title {
-        color: #000;
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 830px) {
-        width: 100%;
-    }
+.btn_icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 0.375rem 0 0 0.375rem;
+    z-index: 1000;
 }
 </style>

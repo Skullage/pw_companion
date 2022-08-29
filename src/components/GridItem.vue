@@ -1,12 +1,13 @@
 <template>
     <router-link :to="{name: item.href}" custom v-slot="{ navigate }">
-        <div class="grid__item" role="link" @click="navigate" :style="inlineStyle">
-            <h3 class="grid__title">
-                {{item.title}}
-            </h3>
-            <p class="grid__desc">
-                {{item.desc}}
-            </p>
+        <div class="col">
+            <div class="card h-100 text-black" style="width: 18rem;" @click="navigate">
+                <img :src="getImg" class="card__img card-img-top img-thumbnail" :alt="item.title">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.title}}</h5>
+                    <p class="card-text">{{item.desc}}</p>
+                </div>
+            </div>
         </div>
     </router-link>
     
@@ -41,34 +42,25 @@
                     backgroundSize: 'contain'
                 }
             },
+            getImg() {
+                return require(`@/assets/images/calcs/${this.item.backgroundImage}`);
+            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-.grid__item {
-    padding: 10px 20px;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+
+.card {
     border-radius: 10px;
-    background-size: cover;
-    border: 1px solid black;
 
     &:hover {
         cursor: pointer;
     }
-}
-.grid__title {
-    padding: 10px 0;
-    background-color: rgba(0, 0, 0, .5);
-    text-align: center;
+    &__img {
+        height: 150px;
+    }
 }
 
-.grid__desc {
-    padding: 10px 0;
-    background-color: rgba(0, 0, 0, .5);
-    text-align: center;
-}
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <button class="btn">
+    <button class="btn btn-outline-light d-flex justify-content-center align-items-center">
         <slot></slot>
     </button>
 </template>
@@ -12,11 +12,14 @@
 
 <style lang="scss" scoped>
 .btn {
-    font-size: 20px;
-    border: 1px solid #fff;
-    color: #fff;
-    background-color: transparent;
-    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    --bs-btn-line-height: 1.25rem; 
+    --bs-btn-font-size: 1.25rem;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: transparent;
+    --bs-btn-hover-border-color: #fff;
+    --bs-btn-focus-shadow-rgb: none;
     transition: .5s;
 
     &:hover {

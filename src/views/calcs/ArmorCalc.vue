@@ -1,26 +1,38 @@
 <template>
-<div class="content-wrap">
-    <div class="container">
-        <div class="content-wrap__inner">
-            <main class="main">
-                <armor-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" :type="type" />
-            </main>
-            <aside class="sidebar">
-                <h2 class="sidebar__title">
+<div class="container">
+    <div class="content-wrap row">
+        <main class="main">
+            <button class="btn btn_icon btn-primary position-fixed top-50 end-0"  @click.prevent="showOffcanvasMenu()" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+            </button>
+            <armor-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" :type="type" />
+        </main>
+        <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header">
+                <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
+                    Сумеречная экипировка
+                </h4>
+                <button type="button" class="btn-close" @click="isShowSidebar = false" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu()"></button>
+            </div>
+            <div class="offcanvas-body">
+                <h5 class="sidebar__title text-center mb-2">
                     Тип брони
-                </h2>
-                <div class="btns-wrapper">
-                    <button class="btn" :class="{btn_active: type == 0}" @click="type = 0"><img src="@/assets/images/calcs/armor/chest.png" alt="Нагрудник"></button>
-                    <button class="btn" :class="{btn_active: type == 1}" @click="type = 1"><img src="@/assets/images/calcs/armor/pants.png" alt="Поножи"></button>
-                    <button class="btn" :class="{btn_active: type == 2}" @click="type = 2"><img src="@/assets/images/calcs/armor/boots.png" alt="Ботинки"></button>
-                    <button class="btn" :class="{btn_active: type == 3}" @click="type = 3"><img src="@/assets/images/calcs/armor/gloves.png" alt="Перчатки"></button>
+                </h5>
+                <div class="btns-wrapper mb-3 d-flex gap-2 justify-content-center">
+                    <button class="btn btn_type p-0" :class="{btn_active: type == 0}" @click="type = 0"><img src="@/assets/images/calcs/armor/chest.png" class="img-fluid" alt="Нагрудник"></button>
+                    <button class="btn btn_type p-0" :class="{btn_active: type == 1}" @click="type = 1"><img src="@/assets/images/calcs/armor/pants.png" class="img-fluid" alt="Поножи"></button>
+                    <button class="btn btn_type p-0" :class="{btn_active: type == 2}" @click="type = 2"><img src="@/assets/images/calcs/armor/boots.png" class="img-fluid" alt="Ботинки"></button>
+                    <button class="btn btn_type p-0" :class="{btn_active: type == 3}" @click="type = 3"><img src="@/assets/images/calcs/armor/gloves.png" class="img-fluid" alt="Перчатки"></button>
                 </div>
-                <h2 class="sidebar__title">
+                <h5 class="sidebar__title text-center">
                     Ресурсы в наличии
-                </h2>
+                </h5>
                 <sidebar-input v-for="(res, index) in getSidebarRes" @remember="remember" :resource="res" :key="index" />
-            </aside>
-        </div>
+            </div>
+        </aside>
     </div>
 </div>
 </template>
@@ -278,6 +290,7 @@ export default {
                 ],
             ],
             type: 0,
+            showMenu: true
         };
     },
     methods: {
@@ -285,23 +298,28 @@ export default {
             localStorage.setItem('armorResources', JSON.stringify(this.resources));
         },
         selectGrade(event) {
-            this.grade = event;
-            if(event == 0 && this.items[this.type][0].isActive) {
+            if(this.items[this.type][event].isActive) {
                 this.items[this.type].forEach(el => {
                     el.isActive = false;
                 })
+                this.grade = 0;
             } else {
                 this.items[this.type].forEach(el => {
                     el.isActive = false;
                 })
                 this.items[this.type][event].isActive = true;
+                this.grade = event;
             }
+        },
+        showOffcanvasMenu(){
+            this.showMenu ? this.showMenu = false : this.showMenu = true;
         }
     },
     mounted() {
         if(localStorage.armorResources) {
             this.resources = JSON.parse(localStorage.getItem('armorResources'));
-        }
+        };
+
     },
     computed: {
         getSidebarRes() {
@@ -319,119 +337,20 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.content-wrap {
-    flex: 1 1 auto;
-
-    &__inner {
-        display: flex;
-        gap: 50px;
-
-        @media (max-width: 830px) {
-            flex-wrap: wrap;
-        }
-    }
+.btn_icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 0.375rem 0 0 0.375rem;
+    z-index: 1000;
 }
 
-.main {
-    flex: 1 1 75%;
-    padding: 40px 20px;
-    color: #000;
+.btn_type {
+    width: 50px;
+    height: 50px;
+    border: 2px solid transparent;
 }
 
-.sidebar {
-    padding: 10px 20px;
-    border-left: 1px solid #000;
-
-    &__input-block {
-        width: 100%;
-        margin-bottom: 10px;
-        display: flex;
-        gap: 10px;
-        background-color: #fff;
-        align-items: center;
-        height: 50px;
-        border: 1px solid black;
-        border-radius: 5px;
-
-        &:focus-within {
-            border: 1px solid red!important;
-        }
-
-        &-icon {
-            width: 50px;
-            height: 100%;
-            flex-shrink: 0;
-            display: block;
-
-            img {
-                width: 50px;
-                height: 100%;
-            }
-        }
-
-        &-info {
-            text-align: left;
-        }
-
-        &-title {
-            font-size: 14px;
-            font-weight: 400;
-            color: #000;
-            margin-left: 5px;
-        }
-    }
-
-    &__title {
-        color: #000;
-        margin-bottom: 10px;
-    }
-
-    &__input {
-        padding: 5px;
-        margin-right: 10px;
-        appearance: none;
-        -moz-appearance: textfield;
-        outline: none;
-
-        &:hover, &:focus {
-            appearance: none;
-            -moz-appearance: number-input;
-        }
-        
-        
-
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-        }
-    }
-
-    @media (max-width: 830px) {
-        width: 100%;
-    }
-}
-
-.btns-wrapper {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.btn {
-    width: 48px;
-    height: 48px;
-    border: 1px solid transparent;
-
-    img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-    }
-
-    &_active {
-        border: 1px solid red;
-    }
+.btn_active {
+    border: 2px solid red;
 }
 </style>

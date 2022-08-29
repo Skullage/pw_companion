@@ -1,11 +1,11 @@
 <template>
-    <label class="input-block">
-        <div class="input-block__icon">
-            <img :src="getImg" :alt="resource.title">
+    <label v-if="!$store.state.blacklist.includes(resource.title)" class="input-block bg-white d-flex align-items-center border border-2 mb-2 rounded pe-2">
+        <div class="input-block__icon me-2 flex-shrink-0">
+            <img :src="getImg" :alt="resource.title" class="img-fluid rounded">
         </div>
         <div class="input-block__info">
-            <h3 class="input-block__title">{{resource.title}}</h3>
-            <pattern-input class="input-block__input"
+            <h3 class="input-block__title text-secondary text-uppercase">{{resource.title}}</h3>
+            <pattern-input class="input-block__input border-0 w-100 p-0"
                :regExp="/^[0\D]*|\D*/g"
                :replacement="''"
                v-model.number="resource.value"
@@ -39,57 +39,22 @@ import PatternInput from '@/components/UI/PatternInput.vue';
 
 <style lang="scss" scoped>
 .input-block {
-    width: 100%;
-    margin-bottom: 10px;
-    display: flex;
-    gap: 10px;
-    background-color: #fff;
-    align-items: center;
-    height: 50px;
-    border: 1px solid black;
-    border-radius: 5px;
+    height: 4.25rem;
 
     &:focus-within {
-        border: 1px solid red!important;
+        border: 2px solid red!important;
     }
 
     &__icon {
-        width: 50px;
-        height: 100%;
-        flex-shrink: 0;
-        display: block;
-
-        img {
-            width: 50px;
-            height: 100%;
-        }
+        width: 4rem;
     }
 
     &__title {
         font-size: 14px;
-        font-weight: 400;
-        color: #000;
-        margin-left: 5px;
     }
 
     &__input {
-        padding: 5px;
-        margin-right: 10px;
-        appearance: none;
-        -moz-appearance: textfield;
         outline: none;
-
-        &:hover, &:focus {
-            appearance: none;
-            -moz-appearance: number-input;
-        }
-        
-        
-
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-        }
     }
 }
 </style>

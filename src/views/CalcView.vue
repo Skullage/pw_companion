@@ -1,7 +1,7 @@
 <template>
 <main class="main">
     <div class="container">
-        <div class="grid">
+        <div class="row row-cols-2 row-cols-md-4 g-4">
             <grid-item v-for="(item, index) in items" :key="index" :item="item" />
         </div>
     </div>
@@ -21,8 +21,8 @@ import GridItem from '@/components/GridItem.vue';
                     {title: "Калькулятор дома", desc: "lorem ipsum", backgroundImage: "house/GridItemBg.jpg", href: 'HouseCalc'},
                     {title: "Калькулятор домопух", desc: "lorem ipsum", backgroundImage: "weapon/GridItemBg.png", href: 'WeaponCalc'},
                     {title: "Калькулятор сумеречной брони", desc: "lorem ipsum", backgroundImage: "armor/GridItemBg.png", href: 'ArmorCalc'},
-                    {title: "Калькулятор накидок с императорской битвы", desc: "lorem ipsum", backgroundImage: "cloak/GridItemBg.png", href: 'CloakCalc'},
-                    {title: "Калькулятор колец с арены Авроры", desc: "lorem ipsum", backgroundImage: "cloak/GridItemBg.png", href: 'RingCalc'},
+                    // {title: "Калькулятор накидок с императорской битвы", desc: "lorem ipsum", backgroundImage: "cloak/GridItemBg.png", href: 'CloakCalc'},
+                    // {title: "Калькулятор колец с арены Авроры", desc: "lorem ipsum", backgroundImage: "cloak/GridItemBg.png", href: 'RingCalc'},
                 ],
             };
         },

@@ -1,8 +1,44 @@
-* {
-    padding: 0;
-	margin: 0;
-	border: 0;
-}
+
+// $enable-grid-classes: false;
+// $enable-cssgrid: true;
+
+// @import "bootstrap/scss/functions"; // Required
+
+// $body-color: #000;
+// // $body-bg: #000;
+
+// @import "bootstrap/scss/variables"; // Required
+
+// @import "bootstrap/scss/maps";
+// @import "bootstrap/scss/mixins"; // Required
+// @import "bootstrap/scss/root"; // Required
+
+// @import "bootstrap/scss/utilities";
+// @import "bootstrap/scss/reboot"; // Required
+// @import "bootstrap/scss/type";
+// @import "bootstrap/scss/images";
+// @import "bootstrap/scss/containers";
+// @import "bootstrap/scss/grid";
+// @import "bootstrap/scss/forms";
+// @import "bootstrap/scss/buttons";
+// @import "bootstrap/scss/transitions";
+// @import "bootstrap/scss/button-group";
+// @import "bootstrap/scss/nav";
+// @import "bootstrap/scss/navbar";
+// @import "bootstrap/scss/card";
+// @import "bootstrap/scss/list-group";
+// @import "bootstrap/scss/close";
+// @import "bootstrap/scss/placeholders";
+
+// @import "bootstrap/scss/helpers";
+
+
+// * {
+//     padding: 0;
+// 	margin: 0;
+// 	border: 0;
+// }
+
 html, body {
     height: 100%;
 	width: 100%;
@@ -11,7 +47,7 @@ html, body {
 }
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
-    color: #fff;
+    color: #000;
     height: 100%;
 }
 
@@ -22,8 +58,8 @@ html, body {
     flex-direction: column;
 }
 
-.container {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 0 15px;
-}
+// .container {
+//     max-width: 1500px;
+//     margin: 0 auto;
+//     padding: 0 15px;
+// }

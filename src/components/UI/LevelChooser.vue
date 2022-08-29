@@ -1,11 +1,10 @@
 <template>
-    <div class="form__input">
-      <label class="form__input-label" v-if="label">{{label}}</label>
-      <div class="form__input-group">
-        <base-button @click="decreaseValue" class="form__input-btn">-</base-button>
-        <span class="form__input-text">{{value}}</span>
-        <base-button @click="increaseValue" class="form__input-btn">+</base-button>
-        
+    <div class="mb-3">
+      <label class="p-2 mb-2 text-center fw-bold text-white" v-if="label">{{label}}</label>
+      <div class="d-flex gap-2 justify-content-center align-items-center">
+        <base-button @click="decreaseValue">-</base-button>
+        <span class="value text-white">{{value}}</span>
+        <base-button @click="increaseValue">+</base-button>
       </div>
     </div>
 </template>
@@ -54,40 +53,7 @@ import BaseButton from '@/components/UI/BaseButton.vue';
 </script>
 
 <style lang="scss" scoped>
-
-.form__input {
-    margin-bottom: 20px;
-
-    &-group {
-        display: flex;
-        justify-content: center;
-        gap: 5px;
-    }
-
-    &-label {
-        display: block;
-        font-weight: 700;
-        padding: 5px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        color: #fff;
-        text-align: center;
-    }
-
-    &-text {
-        width: 35px;
-        height: 25px;
-        border: 0;
-        background-color: transparent;
-        text-align: center;
-        color: #fff;
-        font-size: 20px;
-        cursor: default;
-    }
-
-    &-btn {
-        width: 25px;
-        height: 25px;
-    }
+.value {
+    font-size: 20px;
 }
 </style>
