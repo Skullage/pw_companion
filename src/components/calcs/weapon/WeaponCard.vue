@@ -8,8 +8,8 @@
         </div>
         <div class="card__content row align-items-start" v-if="id > grade">
             <card-col :resources="resources" :object="{'blockName': 'Необходимые ресурсы', 'list': items[id].reqResources, 'value': items[id].reqResources}" />
-            <card-col v-if="id - grade == 1" :resources="resources" :object="{'blockName': 'Осталось нафармить', 'list': leftResources, 'value': leftResources}" />
-            <card-col v-if="id - grade != 1" :resources="resources" :object="{'blockName': 'Осталось нафармить с вашего грейда', 'list': totalResources, 'value': totalResources}" />
+            <card-col v-if="id - grade == 1" :resources="resources" :object="{'blockName': 'Осталось нафармить', 'list': totalResources, 'value': totalResources}" />
+            <card-col v-if="id - grade != 1" :resources="resources" :object="{'blockName': 'Осталось нафармить', 'list': totalResources, 'value': totalResources}" />
         </div>
     </div>
 </template>
@@ -55,20 +55,6 @@ import GradeButton from '@/components/UI/GradeButton.vue';
                     }
                 })
                 return this.totalReqRes;
-            },
-            leftResources() {
-                this.leftReqRes = [];
-                this.items[this.id].reqResources.forEach(el => {
-                    if(!this.$store.state.blacklist.includes(el.title)) {
-                        this.leftReqRes.push({title: el.title, value: el.value - this.resources.find(item => item.title == el.title).value})
-                    }
-                })
-                this.leftReqRes.forEach(el => {
-                    if (el.value < 0) {
-                        el.value = 0;
-                    }
-                })
-                return this.leftReqRes;
             },
         },
     }
