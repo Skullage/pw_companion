@@ -12,9 +12,11 @@
         </div>
         <level-chooser :min=1 :max=9 :value=data.curLvl name="curLvl" @increaseValue="increaseValue('curLvl')" @decreaseValue="decreaseValue('curLvl')" label="Текущий уровень постройки"/>
         <level-chooser :min=2 :max=10 :value=data.reqLvl name="reqLvl" @increaseValue="increaseValue('reqLvl')" @decreaseValue="decreaseValue('reqLvl')" label="Необходимый уровень постройки"/>
-        <div v-if="miniResultVisible">
-            <result-list :resources="resources" />
-        </div>
+        <Transition name="fade" mode="out-in">
+            <div v-if="miniResultVisible">
+                <result-list :resources="resources" />
+            </div>
+        </Transition>
     </form>
 </template>
 
@@ -193,6 +195,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-active {
+    transition: opacity 1s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .form {
     background-color: rgba(0, 0, 0, .7);
 

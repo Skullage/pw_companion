@@ -1,17 +1,6 @@
 <template>
-    <button class="form d-flex justify-content-center align-items-center rounded border-0" @click="addForm"></button>
+    <button class="form d-flex justify-content-center align-items-center rounded border-0" @click="$emit('addForm')"></button>
 </template>
-
-<script>
-
-export default {
-    methods: {
-        addForm() {
-            this.$emit('addForm');
-        }
-    }
-}
-</script>
 <style lang="scss" scoped>
 .form {
     background-color: rgba(0, 0, 0, .7);

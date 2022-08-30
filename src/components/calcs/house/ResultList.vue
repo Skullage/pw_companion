@@ -1,7 +1,5 @@
 <template>
-    <div class="result">
-        <house-card v-for="(res, index) in resources" :key="index" :resource="res"/>
-    </div>
+    <house-card v-for="(res, index) in resources" :key="index" :resource="res"/>
 </template>
 
 <script>

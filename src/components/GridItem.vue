@@ -54,7 +54,6 @@
 <style lang="scss" scoped>
 
 .card {
-
     &:hover {
         cursor: pointer;
     }

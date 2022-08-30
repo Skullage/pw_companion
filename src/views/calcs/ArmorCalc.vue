@@ -1,13 +1,8 @@
 <template>
 <div class="container">
-    <div class="content-wrap row">
+    <div class="row">
         <main class="main">
-            <button class="btn btn_icon btn-primary position-fixed top-50 end-0"  @click.prevent="showOffcanvasMenu()" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                </svg>
-            </button>
+            <offcanvas-button @click.prevent="showOffcanvasMenu(true)" />
             <armor-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" :type="type" />
         </main>
         <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -15,7 +10,7 @@
                 <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
                     Сумеречная экипировка
                 </h4>
-                <button type="button" class="btn-close" @click="isShowSidebar = false" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu(false)"></button>
             </div>
             <div class="offcanvas-body">
                 <h5 class="sidebar__title text-center mb-2">
@@ -40,6 +35,7 @@
 <script>
 import ArmorCard from '@/components/calcs/armor/ArmorCard.vue';
 import SidebarInput from '@/components/UI/SidebarInput.vue';
+import OffcanvasButton from '@/components/UI/OffcanvasButton.vue';
 
 export default {
     data() {
@@ -311,8 +307,8 @@ export default {
                 this.grade = event;
             }
         },
-        showOffcanvasMenu(){
-            this.showMenu ? this.showMenu = false : this.showMenu = true;
+        showOffcanvasMenu(bool){
+            this.showMenu = bool;
         }
     },
     mounted() {
@@ -333,17 +329,11 @@ export default {
     components: {
         ArmorCard,
         SidebarInput,
+        OffcanvasButton,
     }
 }
 </script>
 <style lang="scss" scoped>
-.btn_icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 0.375rem 0 0 0.375rem;
-    z-index: 1000;
-}
-
 .btn_type {
     width: 50px;
     height: 50px;

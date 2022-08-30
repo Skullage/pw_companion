@@ -1,17 +1,24 @@
 <template>
-<div class="content-wrap">
-    <div class="container">
-        <div class="content-wrap__inner">
-            <main class="main">
-                <ring-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" />
-            </main>
-            <aside class="sidebar">
-                <h2 class="sidebar__title">
+<div class="container">
+    <div class="row">
+        <main class="main">
+            <offcanvas-button @click.prevent="showOffcanvasMenu(true)" />
+            <ring-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" />
+        </main>
+        <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header">
+                <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
+                    Кольцо с арены
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu(false)"></button>
+            </div>
+            <div class="offcanvas-body">
+                <h5 class="sidebar__title text-center">
                     Ресурсы в наличии
-                </h2>
+                </h5>
                 <sidebar-input v-for="(res, index) in resources" @remember="remember" :resource="res" :key="index" />
-            </aside>
-        </div>
+            </div>
+        </aside>
     </div>
 </div>
 </template>
@@ -19,6 +26,7 @@
 <script>
 import RingCard from '@/components/calcs/ring/RingCard.vue';
 import SidebarInput from '@/components/UI/SidebarInput.vue';
+import OffcanvasButton from '@/components/UI/OffcanvasButton.vue';
 
 
 export default {
@@ -81,6 +89,7 @@ export default {
                     isActive: false,
                 },
             ],
+            showMenu: true,
         };
     },
     methods: {
@@ -100,6 +109,9 @@ export default {
                 this.items[event].isActive = true;
                 this.grade = event;
             }
+        },
+        showOffcanvasMenu(bool){
+            this.showMenu = bool;
         }
     },
     mounted() {
@@ -110,40 +122,7 @@ export default {
     components: {
         RingCard,
         SidebarInput,
+        OffcanvasButton,
     }
 }
 </script>
-<style lang="scss" scoped>
-.content-wrap {
-    flex: 1 1 auto;
-
-    &__inner {
-        display: flex;
-        gap: 50px;
-
-        @media (max-width: 830px) {
-            flex-wrap: wrap;
-        }
-    }
-}
-
-.main {
-    flex: 1 1 75%;
-    padding: 40px 20px;
-    color: #000;
-}
-
-.sidebar {
-    padding: 10px 20px;
-    border-left: 1px solid #000;
-
-    &__title {
-        color: #000;
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 830px) {
-        width: 100%;
-    }
-}
-</style>

@@ -1,33 +1,35 @@
 <template>
-    <div class="container">
-        <div class="content-wrap">
-            <main class="main">
-                <button class="btn btn_icon btn-primary position-fixed top-50 end-0"  @click.prevent="showOffcanvasMenu()" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                        <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                    </svg>
-                </button>
-                <div class="grid">
+<div class="container">
+    <div class="row">
+        <main class="main">
+            <offcanvas-button @click.prevent="showOffcanvasMenu(true)" />
+            <div class="grid">
+                <TransitionGroup name="list">
                     <calc-form @calculate="calculate" @increaseValue="increaseValue" @decreaseValue="decreaseValue" @removeForm="removeForm" @switch="changeSelect" v-for="form in forms" :key="form.id" :id="form.id" :data="form.data" :whitelist="whitelist" :miniResultVisible="forms.length > 1" />
                     <calc-form-empty @addForm="addForm" v-if="forms.length < 8" />
-                </div>
-            </main>
-            <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                </TransitionGroup>
+            </div>
+        </main>
+        <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
             <div class="offcanvas-header">
                 <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
                     Дом
                 </h4>
-                <button type="button" class="btn-close" @click="isShowSidebar = false" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu(false)"></button>
             </div>
             <div class="offcanvas-body">
-                <h5 class="sidebar__title text-center">
-                    {{forms.length > 1 ? 'Всего' : 'Необходимо'}}
-                </h5>
+                <Transition name="title" mode="out-in">
+                    <h5 class="sidebar__title text-center" v-if="forms.length > 1">
+                        Всего
+                    </h5>
+                    <h5 class="sidebar__title text-center" v-else>
+                        Необходимо
+                    </h5>
+                </Transition>
                 <result-list :resources="resources" />
             </div>
         </aside>
-        </div>
+    </div>
 </div>
 </template>
 
@@ -35,6 +37,7 @@
 import CalcForm from '@/components/calcs/house/CalcForm.vue';
 import CalcFormEmpty from '@/components/calcs/house/CalcFormEmpty.vue';
 import ResultList from '@/components/calcs/house/ResultList.vue';
+import OffcanvasButton from '@/components/UI/OffcanvasButton.vue';
 
 export default {
     data() {
@@ -48,7 +51,9 @@ export default {
                 {title: 'Серебро', value: 0, href: 'calcs/house/silver.png'},
                 {title: 'Уровень дома', value: 0},
             ],
-            forms: [
+            forms: localStorage.getItem('forms') != undefined ? JSON.parse(localStorage.getItem('forms')) 
+            : 
+            [
                 {
                     id: Date.now(), 
                     data: {
@@ -66,7 +71,7 @@ export default {
                         {title: 'Уровень дома', value: 0},
                     ],
                 },
-              ],
+            ],
             whitelist: [],
             showMenu: true
         };
@@ -144,32 +149,24 @@ export default {
             this.forms[this.forms.findIndex(item => item.id == event.id)].data[event.param] -= 1;
             localStorage.setItem('forms', JSON.stringify(this.forms));
         },
-        showOffcanvasMenu(){
-            this.showMenu ? this.showMenu = false : this.showMenu = true;
+        showOffcanvasMenu(bool){
+            this.showMenu = bool;
         }
     },
     mounted() {
         if(localStorage.whitelist) {
             this.whitelist = JSON.parse(localStorage.getItem('whitelist'));
         }
-        if(localStorage.forms) {
-            this.forms = JSON.parse(localStorage.getItem('forms'));
-        }
     },
     components: { 
         CalcForm, 
         CalcFormEmpty,
         ResultList,
+        OffcanvasButton,
     }
 }
 </script>
 <style lang="scss" scoped>
-.btn_icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 0.375rem 0 0 0.375rem;
-    z-index: 1000;
-}
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -186,5 +183,28 @@ export default {
     @media (max-width: 630px) {
         grid-template-columns: 1fr;
     }
+}
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.list-enter-active {
+  transition: opacity 1.5s ease;
+}
+.list-enter-from {
+  opacity: 0;
+}
+
+.title-enter-active,
+.title-leave-active {
+  transition: opacity 0.3s ease;
+}
+.title-enter-from,
+.title-leave-to {
+  opacity: 0;
 }
 </style>
