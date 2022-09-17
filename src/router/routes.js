@@ -6,6 +6,12 @@ const routes = [
       meta: {title: "PW companion"},
     },
     {
+      path: '/addGenieSkill',
+      name: 'addGenieSkill',
+      component: () => import(/* webpackChunkName: "addGenieSkill" */ '@/views/addGenieSkill.vue'),
+      meta: {title: "PW companion - добавить скилл джина"},
+    },
+    {
       path: '/calc/house',
       name: 'HouseCalc',
       component: () => import(/* webpackChunkName: "HouseCalc" */ '@/views/calcs/HouseCalc.vue'),
@@ -34,6 +40,12 @@ const routes = [
       name: 'RingCalc',
       component: () => import(/* webpackChunkName: "RingCalc" */ '@/views/calcs/RingCalc.vue'),
       meta: {title: "PW companion - Калькулятор колец с арены Авроры"},
+    },
+    {
+      path: '/calc/genie',
+      name: 'GenieCalc',
+      component: () => import(/* webpackChunkName: "GenieCalc" */ '@/views/calcs/GenieCalc.vue'),
+      meta: {title: "PW companion - Калькулятор джина"},
     },
     { 
       path: "/:catchAll(.*)",

@@ -35,15 +35,15 @@
             }
         },
         computed: {
-            bgImage () {
-                return require('@/assets/images/calcs/' + this.item.backgroundImage)
-            },
-            inlineStyle () {
-                return {
-                    background: `url(${this.bgImage}) no-repeat center center`,
-                    backgroundSize: 'contain'
-                }
-            },
+            // bgImage () {
+            //     return require('@/assets/images/calcs/' + this.item.backgroundImage)
+            // },
+            // inlineStyle () {
+            //     return {
+            //         background: `url(${this.bgImage}) no-repeat center center`,
+            //         backgroundSize: 'contain'
+            //     }
+            // },
             getImg() {
                 return require(`@/assets/images/calcs/${this.item.backgroundImage}`);
             }

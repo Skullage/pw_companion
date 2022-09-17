@@ -1,43 +1,16 @@
+@import '../sprite.css';
 
-// $enable-grid-classes: false;
-// $enable-cssgrid: true;
+.ck-content {
+    min-height: 200px;
+}
 
-// @import "bootstrap/scss/functions"; // Required
+.text-brown {
+    color: #8B4513;
+}
 
-// $body-color: #000;
-// // $body-bg: #000;
-
-// @import "bootstrap/scss/variables"; // Required
-
-// @import "bootstrap/scss/maps";
-// @import "bootstrap/scss/mixins"; // Required
-// @import "bootstrap/scss/root"; // Required
-
-// @import "bootstrap/scss/utilities";
-// @import "bootstrap/scss/reboot"; // Required
-// @import "bootstrap/scss/type";
-// @import "bootstrap/scss/images";
-// @import "bootstrap/scss/containers";
-// @import "bootstrap/scss/grid";
-// @import "bootstrap/scss/forms";
-// @import "bootstrap/scss/buttons";
-// @import "bootstrap/scss/transitions";
-// @import "bootstrap/scss/button-group";
-// @import "bootstrap/scss/nav";
-// @import "bootstrap/scss/navbar";
-// @import "bootstrap/scss/card";
-// @import "bootstrap/scss/list-group";
-// @import "bootstrap/scss/close";
-// @import "bootstrap/scss/placeholders";
-
-// @import "bootstrap/scss/helpers";
-
-
-// * {
-//     padding: 0;
-// 	margin: 0;
-// 	border: 0;
-// }
+.ck-button {
+    cursor: pointer!important;
+}
 
 html, body {
     height: 100%;
@@ -57,9 +30,3 @@ html, body {
     display: flex;
     flex-direction: column;
 }
-
-// .container {
-//     max-width: 1500px;
-//     margin: 0 auto;
-//     padding: 0 15px;
-// }

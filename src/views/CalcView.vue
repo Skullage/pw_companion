@@ -22,6 +22,7 @@ import GridItem from '@/components/GridItem.vue';
                     {title: "Калькулятор сумеречной брони", desc: "", backgroundImage: "armor/GridItemBg.png", href: 'ArmorCalc'},
                     {title: "Калькулятор накидок с императорской битвы", desc: "", backgroundImage: "cloak/GridItemBg.png", href: 'CloakCalc'},
                     {title: "Калькулятор колец с арены Авроры", desc: "", backgroundImage: "cloak/GridItemBg.png", href: 'RingCalc'},
+                    {title: "Калькулятор джина", desc: "", backgroundImage: "cloak/GridItemBg.png", href: 'GenieCalc'},
                 ],
             };
         },
