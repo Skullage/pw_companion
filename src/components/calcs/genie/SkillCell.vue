@@ -21,7 +21,7 @@
                 <p class="mb-1 text-warning" v-if="skill.info.allowUse != undefined">Ограничения: <span class="text-white">{{skill.info.allowUse}}</span></p>
             </div>
             <div class="desc mb-4">
-                <span v-html="skill.desc"></span>
+                <span v-html="skill.descr"></span>
             </div>
             <div class="boosts" v-if="skill.boosts != undefined">
                 <p class="mb-1" v-for="(item, index) in skill.boosts" :key="index" :class="{'text-brown': item.title == 'Сила', 'text-success': item.title == 'Ловкость'}">{{`${item.title}: ${item.desc}`}}</p>

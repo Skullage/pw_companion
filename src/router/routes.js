@@ -16,9 +16,17 @@ const routes = [
     {
       path: '/updateGenieSkill/id=:id',
       name: 'updateGenieSkill',
-      component: () => import(/* webpackChunkName: "addGenieSkill" */ '@/views/updateGenieSkill.vue'),
+      component: () => import(/* webpackChunkName: "updateGenieSkill" */ '@/views/updateGenieSkill.vue'),
       meta: {
-        title: "PW companion - Добавить скилл джина",
+        title: "PW companion - Изменить скилл джина",
+      },
+    },
+    {
+      path: '/updateUser/id=:id',
+      name: 'UpdateUser',
+      component: () => import(/* webpackChunkName: "updateUser" */ '@/views/UpdateUser.vue'),
+      meta: {
+        title: "PW companion - Изменить пользователя",
       },
     },
     {

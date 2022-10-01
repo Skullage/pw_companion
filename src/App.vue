@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
     <error-message v-if="$store.state.error.errorText > 0" />
-    <base-header />
+    <base-header class="header" />
     <router-view />
     <footer class="footer">
     </footer>

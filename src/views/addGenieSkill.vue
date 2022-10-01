@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-success" @click="saveSkill">SAVE</button>
+                    <button class="btn btn-success" @click="saveSkill">Создать</button>
                 </div>
             </div>
         </div>

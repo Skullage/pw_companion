@@ -38,7 +38,7 @@
                         data: JSON.stringify(data)
                     }
                     const response = await axios(request);
-                    localStorage.setItem('jwt', response);
+                    localStorage.setItem('jwt', response.data.token);
                     this.$router.push('/');
                 }
             }
