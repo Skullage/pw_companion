@@ -13,5 +13,9 @@ import BaseHeader from '@/components/BaseHeader.vue';
 
 export default {
     components: { ErrorMessage, BaseHeader },
+
+    created() {
+        this.$store.dispatch('getClasses');
+    }
 }
 </script>

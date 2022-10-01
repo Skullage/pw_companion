@@ -9,7 +9,39 @@ const routes = [
       path: '/addGenieSkill',
       name: 'addGenieSkill',
       component: () => import(/* webpackChunkName: "addGenieSkill" */ '@/views/addGenieSkill.vue'),
-      meta: {title: "PW companion - добавить скилл джина"},
+      meta: {
+        title: "PW companion - Добавить скилл джина",
+      },
+    },
+    {
+      path: '/updateGenieSkill/id=:id',
+      name: 'updateGenieSkill',
+      component: () => import(/* webpackChunkName: "addGenieSkill" */ '@/views/updateGenieSkill.vue'),
+      meta: {
+        title: "PW companion - Добавить скилл джина",
+      },
+    },
+    {
+      path: '/admin',
+      name: 'AdminPanel',
+      component: () => import(/* webpackChunkName: "addUser" */ '@/views/AdminPanel.vue'),
+      meta: {
+        title: "PW companion - Панель администратора",
+        authRequired: true,
+      },
+      
+    },
+    {
+      path: '/addUser',
+      name: 'addUser',
+      component: () => import(/* webpackChunkName: "addUser" */ '@/views/addUser.vue'),
+      meta: {title: "PW companion - Создать пользователя"},
+    },
+    {
+      path: '/login',
+      name: 'LoginPanel',
+      component: () => import(/* webpackChunkName: "AdminPanel" */ '@/views/LoginPanel.vue'),
+      meta: {title: "PW companion - Авторизация"},
     },
     {
       path: '/calc/house',
@@ -45,7 +77,10 @@ const routes = [
       path: '/calc/genie',
       name: 'GenieCalc',
       component: () => import(/* webpackChunkName: "GenieCalc" */ '@/views/calcs/GenieCalc.vue'),
-      meta: {title: "PW companion - Калькулятор джина"},
+      meta: {
+        title: "PW companion - Калькулятор джина",
+        authRequired: true,
+      },
     },
     { 
       path: "/:catchAll(.*)",

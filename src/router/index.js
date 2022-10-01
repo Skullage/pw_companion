@@ -9,7 +9,19 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
-  next();
+
+  if(to.matched.some(record => record.meta.authRequired)) {
+    if (localStorage.getItem('jwt') == null) {
+      next({
+        path: '/login',
+        // params: { nextUrl: to.fullPath }
+      })
+    } else {
+        next()
+    }
+  } else {
+    next()
+  }
 });
 
 export default router

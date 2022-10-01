@@ -25,9 +25,7 @@ import SkillCell from '@/components/calcs/genie/SkillCell.vue';
         methods: {
             async getSkillbyCategory() {
                 try {
-                    const response = await axios.get(
-                        `http://localhost:5000/genie_skills/cat/${this.category}`
-                    );
+                    const response = await axios.get(`${this.$store.state.baseServerUrl}genie_skills/cat/${this.category}`);
                     this.data = response.data;
                 } catch (err) {
                     console.log(err);

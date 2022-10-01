@@ -11,6 +11,9 @@
                         <li class="nav-item">
                             <router-link class="nav-link" aria-current="page" :to="{name: 'calc'}">Калькуляторы</router-link>
                         </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" @click="logout" v-if="isLogged">Выйти</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -20,6 +23,17 @@
 
 <script>
     export default {
-        name: 'BaseHeader'
+        name: 'BaseHeader',
+        methods: {
+            logout() {
+                localStorage.removeItem('jwt');
+                this.$router.push('/');
+            }
+        },
+        computed: {
+            isLogged() {
+                return localStorage.getItem('jwt') != undefined;
+            }
+        }
     }
 </script>

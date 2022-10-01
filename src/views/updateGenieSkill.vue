@@ -16,7 +16,7 @@
                 </div>
                 <div class="mb-3">
                     <h3 class="label mb-1">Бусты</h3>
-                    <boost-field class="mb-2" v-for="(item, index) in genieBoosts" :key="index" v-model="genieBoosts[index]" :id="index" @remove="removeBoostFromArray" />
+                    <boost-field class="mb-2" v-for="(item, index) in genieBoosts" :key="index" :id="index" v-model="genieBoosts[index]" @remove="removeBoostFromArray" />
                     <button class="btn btn-outline-secondary" @click="addBoostField">Добавить</button>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-success" @click="saveSkill">SAVE</button>
+                    <button class="btn btn-success" @click="updateSkill">SAVE</button>
                 </div>
             </div>
         </div>
@@ -89,6 +89,9 @@
                 }
             };
         },
+        created() {
+            this.getSkillById(this.$route.params.id);
+        },
         methods: {
             removeBoostFromArray(event) {
                 this.genieBoosts.splice(event, 1);
@@ -96,24 +99,48 @@
             addBoostField() {
                 this.genieBoosts.push({"title": 'Сила', "desc": ''});
             },
-            async saveSkill() {
+            async getSkillById(id) {
                 try {
-                    await axios.post(this.$store.state.baseServerUrl + 'genie_skills', {
+                    const response = await axios.get(`${this.$store.state.baseServerUrl}genie_skills/id=${id}`);
+                    this.title = response.data.title;
+                    this.desc = response.data.descr;
+                    this.icon = response.data.icon;
+                    this.genieBoosts = response.data.boosts;
+                    this.genieInfo = response.data.info;
+                    this.category = response.data.category;
+
+                    if(response.data.blockedClasses.length > 0) {
+                        this.$store.state.classes.forEach(el => {
+                            if(!response.data.blockedClasses.includes(el.title)) {
+                                this.allowedClasses.push(el.title);
+                            }
+                        })
+                    }
+
+                    if(response.data.blockedTerrain.length > 0) {
+                        ['Земля', 'Вода', 'Воздух'].forEach(el => {
+                            if(!response.data.blockedTerrain.includes(el)) {
+                                this.allowedTerrain.push(el);
+                            }
+                        })
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+            async updateSkill() {
+                try {
+                    await axios.put(`${this.$store.state.baseServerUrl}genie_skills/${this.$route.params.id}`, {
                         title: this.title,
-                        descr: this.desc,
-                        boosts: this.genieBoosts.length > 0 ? JSON.stringify(this.genieBoosts) : null,
+                        desc: this.desc,
+                        boosts: this.genieBoosts != null && this.genieBoosts.length > 0 ? JSON.stringify(this.genieBoosts) : null,
                         info: JSON.stringify(this.genieInfo),
                         icon: this.icon,
                         blockedClasses: this.allowedClasses.length > 0 ? JSON.stringify(this.getBlockedClasses) : JSON.stringify([]),
                         blockedTerrain: this.allowedTerrain.length > 0 ? JSON.stringify(this.getBlockedTerrain) : JSON.stringify([]),
                         category: this.category,
                     });
-                    this.title = '';
-                    this.desc = '';
-                    this.icon = '';
-                    this.genieBoosts = [{"title": 'Сила', "desc": ''}, {"title": 'Сила', "desc": ''}];
-                    this.genieInfo = {"cd": '', "energy": '', "stamina": '', "reqLevel": '', "range": '', "reqElements": {"MT": 0, "WD": 0, "ER": 0, "WT": 0, "FR": 0}};
-                    window.location.reload();
+                    this.$router.push('/admin');
                 } catch (err) {
                     console.log(err);
                 }

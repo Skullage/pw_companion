@@ -1,5 +1,5 @@
 <template>
-    <div class="icon" :class="getIconClass">
+    <div class="icon" :class="[getIconClass, {'disabled': skill.blockedClasses.includes($store.state.genie.selectedClass) || skill.blockedTerrain.includes($store.state.genie.selectedTerrain)}]">
         <div class="hint">
             <div class="hint__header d-flex justify-content-between align-items-center">
                 <h5 class="mb-1">{{skill.title}}</h5>
@@ -14,16 +14,13 @@
             </p>
             <div class="info mb-4">
                 <p class="mb-1 text-warning">Необходимый уровень: <span class="text-white">{{skill.info.reqLevel}}</span></p>
-                <p class="mb-1 text-warning" v-if="skill.info.range != undefined">Дальность: <span class="text-white">{{skill.info.range}}</span></p>
+                <p class="mb-1 text-warning" v-if="skill.info.range > 0">Дальность: <span class="text-white">{{skill.info.range}}</span> м.</p>
                 <p class="mb-1 text-warning">Затраты энергии: <span class="text-white">{{skill.info.energy}}</span></p>
                 <p class="mb-1 text-warning">Затраты физической силы: <span class="text-white">{{skill.info.stamina}}</span></p>
                 <p class="mb-1 text-warning">Перезарядка: <span class="text-white">{{skill.info.cd}}</span> сек.</p>
                 <p class="mb-1 text-warning" v-if="skill.info.allowUse != undefined">Ограничения: <span class="text-white">{{skill.info.allowUse}}</span></p>
             </div>
             <div class="desc mb-4">
-                <!-- <p class="mb-1" v-for="(item, index) in skill.desc" :key="index">{{item}}</p> -->
-                <!-- <pre></pre> -->
-                <!-- {{}} -->
                 <span v-html="skill.desc"></span>
             </div>
             <div class="boosts" v-if="skill.boosts != undefined">
@@ -39,15 +36,6 @@
             skill: Object,
         },
         computed: {
-            bgImage () {
-                return require('@/assets/images/calcs/genie/skills/' + this.skill.icon)
-            },
-            inlineStyle () {
-                return {
-                    background: `url(${this.bgImage}) no-repeat center center`,
-                    backgroundSize: 'contain'
-                }
-            },
             getIconClass() {
                 return `icon-${this.skill.icon}`;
             }
@@ -56,10 +44,6 @@
 </script>
 
 <style lang="scss" scoped>
-pre {
-    overflow: hidden;
-    white-space:pre-wrap;
-}
 .icon {
     position: relative;
     cursor: pointer;
@@ -79,5 +63,15 @@ pre {
 }
 .icon:hover .hint {
     display: block!important;
+}
+
+.disabled::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 </style>

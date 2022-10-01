@@ -1,17 +1,16 @@
 <template>
-    <div class="control d-flex gap-2 justify-content-center">
-        <select name="boostStat" id="boostStat" @change="updateArray" v-model="boostStat">
+    <div class="input-group">
+        <select name="boostStat" id="boostStat" class="form-select" v-model="modelValue.title">
             <option value="Сила">Сила</option>
             <option value="Ловкость">Ловкость</option>
         </select>
         <input
-        class="input"
+        class="form-control w-50"
         type="text"
-        @input="updateArray"
         placeholder="Буст"
-        v-model="boostDesc"
+        v-model="modelValue.desc"
         />
-        <button @click="removeFromArray">Удалить</button>
+        <button class="btn btn-outline-secondary" @click="removeFromArray">Удалить</button>
     </div>
 </template>
 
@@ -19,17 +18,13 @@
     export default {
         props: {
             id: Number,
+            modelValue: Object,
         },
         data() {
             return {
-                boostStat: 'Сила',
-                boostDesc: '',
             }
         },
         methods: {
-            updateArray() {
-                this.$emit('update', {stat: this.boostStat, desc: this.boostDesc, index: this.id});
-            },
             removeFromArray() {
                 this.$emit('remove', this.id);
             }
