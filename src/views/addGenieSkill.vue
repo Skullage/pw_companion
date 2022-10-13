@@ -107,7 +107,13 @@
                         blockedClasses: this.allowedClasses.length > 0 ? JSON.stringify(this.getBlockedClasses) : JSON.stringify([]),
                         blockedTerrain: this.allowedTerrain.length > 0 ? JSON.stringify(this.getBlockedTerrain) : JSON.stringify([]),
                         category: this.category,
-                    });
+                    },
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+                        }
+                    }
+                    );
                     this.title = '';
                     this.desc = '';
                     this.icon = '';

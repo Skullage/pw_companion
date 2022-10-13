@@ -1,6 +1,6 @@
 <template>
-    <div class="icon" :class="[getIconClass, {'disabled': skill.blockedClasses.includes($store.state.genie.selectedClass) || skill.blockedTerrain.includes($store.state.genie.selectedTerrain)}]">
-        <div class="hint">
+    <div @click="click" class="icon position-relative" :class="[getIconClass, {'disabled': disabled, 'selected': selected}]">
+        <div class="hint d-none position-absolute p-2 bg-dark text-white rounded" :class="[skill.category < 8 ? 'top-0' : 'bottom-0', itemRowId < 5 ? 'left-0' : 'right-0']">
             <div class="hint__header d-flex justify-content-between align-items-center">
                 <h5 class="mb-1">{{skill.title}}</h5>
                 <div class="hint__icon" :class="getIconClass"></div>
@@ -32,34 +32,50 @@
 
 <script>
     export default {
+        data() {
+            return {
+                selected: false,
+            }
+        },
         props: {
             skill: Object,
+            itemRowId: Number,
+        },
+        methods: {
+            click() {
+                if(this.selected) {
+                    this.$store.commit('genie/removeSkill', this.skill.title);
+                    this.selected = !this.selected;
+                } else {
+                    if(!this.disabled) {
+                        this.$store.commit('genie/pushSkill', this.skill);
+                        this.selected = !this.selected;
+                    }
+                }
+            }
         },
         computed: {
             getIconClass() {
                 return `icon-${this.skill.icon}`;
+            },
+            disabled: {
+                get() {
+                    return this.skill.blockedClasses.includes(this.$store.state.genie.selectedClass) || this.skill.blockedTerrain.includes(this.$store.state.genie.selectedTerrain) || this.$store.getters['genie/isSkillSlotsBusy'] && this.selected == false;
+                }
             }
-        }
+        },          
     }
 </script>
 
 <style lang="scss" scoped>
 .icon {
-    position: relative;
     cursor: pointer;
 }
 .hint {
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: 100%;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, .9);
-    color: #fff;
-    width: 600px;
+    width: 30vw;
     height: auto;
     z-index: 2;
-    border-radius: 10px;
+    pointer-events: none;
 }
 .icon:hover .hint {
     display: block!important;
@@ -73,5 +89,9 @@
     position: absolute;
     left: 0;
     top: 0;
+}
+
+.selected {
+    border: 3px solid red;
 }
 </style>

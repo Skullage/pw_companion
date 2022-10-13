@@ -1,11 +1,11 @@
 <template>
-    <div class="error">
-        <div class="error__group">
-            <p class="error__text" v-for="(text, index) in $store.state.error.errorText" :key="index" :value="text">
-                <span class="error__title">ОШИБКА!</span> {{text}}
+    <div class="error w-100 position-absolute top-0 right-0 d-flex align-items-center justify-content-center text-dark bg-danger px-1 py-2 gap-1">
+        <div class="flex-fill">
+            <p class="mb-1 text-md-center" v-for="(text, index) in $store.state.error.errorText" :key="index" :value="text">
+                <span class="text-uppercase fw-bold">Ошибка!</span> {{text}}
             </p>
         </div>
-        <button @click="close" class="error__btn">&#10006;</button>
+        <button type="button" @click="close" class="btn-close" aria-label="Close"></button>
     </div>
 </template>
 
@@ -22,37 +22,7 @@
 
 <style lang="scss" scoped>
 .error {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #000;
-    background-color: #ff0000;
     min-height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    z-index: 10;
-
-    &__group {
-        flex: 1;
-    }
-
-    &__text {
-        margin-bottom: 5px;
-    }
-
-    &__title {
-        text-transform: uppercase;
-        font-weight: 700;
-    }
-
-    &__btn {
-        background-color: transparent;
-        border: none;
-        font-size: 20px;
-        cursor: pointer;
-    }
+    z-index: 99999;
 }
 </style>

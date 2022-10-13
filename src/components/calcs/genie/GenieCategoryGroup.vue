@@ -1,14 +1,13 @@
 <template>
-    <div class="d-flex align-items-center justify-content-center mb-2">
-        <h6 class="col-4 mb-0 text-center">Уровень {{category}}</h6>
-        <div class="col-8 d-flex gap-2 justify-content-center">
-            <skill-cell v-for="(item, index) in data" :key="index" :skill="item" />
+    <div class="d-flex mb-2">
+        <h6 class="col-3 mb-0 text-center">Уровень {{category}}</h6>
+        <div class="col-9 d-flex gap-2 justify-content-center">
+            <skill-cell v-for="(item, index) in skills" :key="index" :itemRowId="index" :skill="item" />
         </div>
     </div>
 </template>
 
 <script>
-import axios from "axios";
 import SkillCell from '@/components/calcs/genie/SkillCell.vue';
     export default {
         components: {
@@ -16,24 +15,12 @@ import SkillCell from '@/components/calcs/genie/SkillCell.vue';
         },
         props: {
             category: Number,
+            skills: Array,
         },
         data() {
             return {
                 data: [],
             }
-        },
-        methods: {
-            async getSkillbyCategory() {
-                try {
-                    const response = await axios.get(`${this.$store.state.baseServerUrl}genie_skills/cat/${this.category}`);
-                    this.data = response.data;
-                } catch (err) {
-                    console.log(err);
-                }
-            },
-        },
-        mounted() {
-            this.getSkillbyCategory();
         },
     }
 </script>

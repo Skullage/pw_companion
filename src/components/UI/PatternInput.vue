@@ -19,6 +19,12 @@ export default {
     replacement: {
       type: String,
       default: ''
+    },
+    min: {
+      type: Number,
+    },
+    max: {
+      type: Number,
     }
   },
   emits: ['update:modelValue'],
@@ -37,6 +43,14 @@ export default {
 
     // update the value of input
     updateValue (val) {
+      if (val > this.max) {
+        val = this.max;
+      }
+
+      if (val < this.min) {
+        val = this.min;
+      }
+
       const formattedValue = this.formatValue(val)
 
       this.val = formattedValue

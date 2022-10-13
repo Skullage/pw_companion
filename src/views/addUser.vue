@@ -45,7 +45,13 @@
                         password: this.password,
                         email: this.email,
                         isAdmin: this.isAdmin,
-                    });
+                    },
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+                        }
+                    }
+                    );
                     this.$router.push('/admin')
                 } catch (err) {
                     console.log(err);

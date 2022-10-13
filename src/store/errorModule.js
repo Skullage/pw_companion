@@ -6,7 +6,9 @@ export const errorModule = {
         }
     },
     getters: {
-
+        errorIsVisible(state) {
+            return state.errorText.length > 0;
+        }
     },
     mutations: {
         setErrorText(state, text) {

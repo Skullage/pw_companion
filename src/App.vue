@@ -1,8 +1,13 @@
 <template>
 <div class="wrapper">
-    <error-message v-if="$store.state.error.errorText > 0" />
+    <error-message v-if="$store.getters['error/errorIsVisible']" />
     <base-header class="header" />
-    <router-view />
+    <!-- <router-view /> -->
+    <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+            <component :is="Component" />
+        </transition>
+    </router-view>
     <footer class="footer">
     </footer>
 </div>
@@ -12,10 +17,24 @@ import ErrorMessage from '@/components/ErrorMessage.vue';
 import BaseHeader from '@/components/BaseHeader.vue';
 
 export default {
-    components: { ErrorMessage, BaseHeader },
-
+    components: { 
+        ErrorMessage, 
+        BaseHeader 
+    },
     created() {
-        this.$store.dispatch('getClasses');
-    }
+        this.$store.dispatch('getClasses', this.$store.state.baseServerUrl);
+    },
 }
 </script>
+
+<style lang="scss">
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s ease-out;
+}
+</style>
