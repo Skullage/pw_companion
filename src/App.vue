@@ -23,6 +23,8 @@ export default {
     },
     created() {
         this.$store.dispatch('getClasses', this.$store.state.baseServerUrl);
+        this.$store.dispatch('getStats', this.$store.state.baseServerUrl);
+        this.$store.dispatch('getResources', this.$store.state.baseServerUrl);
     },
 }
 </script>

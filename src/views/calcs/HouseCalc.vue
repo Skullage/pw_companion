@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <main class="main">
-            <offcanvas-button @click.prevent="showOffcanvasMenu(true)" />
+            <offcanvas-button @click.prevent="$store.commit('toggleMenu')" />
             <div class="grid">
                 <TransitionGroup name="list">
                     <calc-form @calculate="calculate" @increaseValue="increaseValue" @decreaseValue="decreaseValue" @removeForm="removeForm" @switch="changeSelect" v-for="form in forms" :key="form.id" :id="form.id" :data="form.data" :whitelist="whitelist" :miniResultVisible="forms.length > 1" />
@@ -10,12 +10,12 @@
                 </TransitionGroup>
             </div>
         </main>
-        <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <aside class="border-start offcanvas offcanvas-end" :class="$store.state.showMenu ? 'show' : ''" :style="{ visibility: $store.state.showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
             <div class="offcanvas-header">
                 <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
                     Дом
                 </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu(false)"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="$store.commit('toggleMenu')"></button>
             </div>
             <div class="offcanvas-body">
                 <Transition name="title" mode="out-in">
@@ -73,7 +73,6 @@ export default {
                 },
             ],
             whitelist: [],
-            showMenu: true
         };
     },
     methods: {
@@ -149,9 +148,6 @@ export default {
             this.forms[this.forms.findIndex(item => item.id == event.id)].data[event.param] -= 1;
             localStorage.setItem('forms', JSON.stringify(this.forms));
         },
-        showOffcanvasMenu(bool){
-            this.showMenu = bool;
-        }
     },
     mounted() {
         if(localStorage.whitelist) {

@@ -4,7 +4,7 @@ export const genieModule = {
         return {
             selectedClass: '',
             selectedTerrain: '',
-            genieLvl: 1,
+            genieLvl: 100,
             luckyPoints: 0,
             reqElements: {
                 MT: 0,

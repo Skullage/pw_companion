@@ -4,6 +4,7 @@
             <div class="hint__header d-flex justify-content-between align-items-center">
                 <h5 class="mb-1">{{skill.title}}</h5>
                 <div class="hint__icon" :class="getIconClass"></div>
+                {{isElementsPointEnough}}
             </div>
             <p>
                 <span class="text-warning" v-if="skill.info.reqElements.MT > 0">MT: {{skill.info.reqElements.MT}}</span>  
@@ -58,9 +59,19 @@
             getIconClass() {
                 return `icon-${this.skill.icon}`;
             },
+            isElementsPointEnough() {
+                let busyPoints = 0;
+                for (let [key, value] of Object.entries(this.$store.state.genie.reqElements)) {
+                    if (this.skill.info.reqElements[Object.keys(this.skill.info.reqElements).find(item => item == key)] - value > 0) { 
+                        busyPoints += this.skill.info.reqElements[Object.keys(this.skill.info.reqElements).find(item => item == key)] - value;
+                    };
+                }
+                
+                return this.$store.getters['genie/getFreeElemetalPoints'] - busyPoints >= 0;
+            },
             disabled: {
                 get() {
-                    return this.skill.blockedClasses.includes(this.$store.state.genie.selectedClass) || this.skill.blockedTerrain.includes(this.$store.state.genie.selectedTerrain) || this.$store.getters['genie/isSkillSlotsBusy'] && this.selected == false;
+                    return !this.isElementsPointEnough || this.skill.blockedClasses.includes(this.$store.state.genie.selectedClass) || this.skill.blockedTerrain.includes(this.$store.state.genie.selectedTerrain) || this.$store.getters['genie/isSkillSlotsBusy'] && this.selected == false;
                 }
             }
         },          

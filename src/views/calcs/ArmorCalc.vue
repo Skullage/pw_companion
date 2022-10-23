@@ -2,27 +2,34 @@
 <div class="container">
     <div class="row">
         <main class="main">
-            <offcanvas-button @click.prevent="showOffcanvasMenu(true)" />
+            <offcanvas-button @click.prevent="$store.commit('toggleMenu')" />
             <armor-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" :type="type" />
         </main>
-        <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <aside class="border-start offcanvas offcanvas-end" :class="$store.state.showMenu ? 'show' : ''" :style="{ visibility: $store.state.showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
             <div class="offcanvas-header">
-                <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
+                <h4 class=" mb-0" id="offcanvasScrollingLabel">
                     Сумеречная экипировка
                 </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu(false)"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="$store.commit('toggleMenu')"></button>
             </div>
             <div class="offcanvas-body">
-                <h5 class="sidebar__title text-center mb-2">
+                <h5 class="text-center mb-2">
+                    
+                </h5>
+                <ul class="mb-3 d-flex gap-2 justify-content-center list-unstyled">
+                    <li><button class="btn">Крафт</button></li>
+                    <li><button class="btn">Аренда</button></li>
+                </ul>
+                <h5 class="text-center mb-2">
                     Тип брони
                 </h5>
-                <div class="btns-wrapper mb-3 d-flex gap-2 justify-content-center">
-                    <button class="btn btn_type p-0" :class="{btn_active: type == 0}" @click="type = 0"><img src="@/assets/images/calcs/armor/chest.png" class="img-fluid" alt="Нагрудник"></button>
-                    <button class="btn btn_type p-0" :class="{btn_active: type == 1}" @click="type = 1"><img src="@/assets/images/calcs/armor/pants.png" class="img-fluid" alt="Поножи"></button>
-                    <button class="btn btn_type p-0" :class="{btn_active: type == 2}" @click="type = 2"><img src="@/assets/images/calcs/armor/boots.png" class="img-fluid" alt="Ботинки"></button>
-                    <button class="btn btn_type p-0" :class="{btn_active: type == 3}" @click="type = 3"><img src="@/assets/images/calcs/armor/gloves.png" class="img-fluid" alt="Перчатки"></button>
-                </div>
-                <h5 class="sidebar__title text-center">
+                <ul class="mb-3 d-flex gap-2 justify-content-center list-unstyled">
+                    <li><button class="btn btn_type p-0" :class="{btn_active: type == 0}" @click="type = 0"><img src="@/assets/images/calcs/armor/chest.png" class="img-fluid" alt="Нагрудник"></button></li>
+                    <li><button class="btn btn_type p-0" :class="{btn_active: type == 1}" @click="type = 1"><img src="@/assets/images/calcs/armor/pants.png" class="img-fluid" alt="Поножи"></button></li>
+                    <li><button class="btn btn_type p-0" :class="{btn_active: type == 2}" @click="type = 2"><img src="@/assets/images/calcs/armor/boots.png" class="img-fluid" alt="Ботинки"></button></li>
+                    <li><button class="btn btn_type p-0" :class="{btn_active: type == 3}" @click="type = 3"><img src="@/assets/images/calcs/armor/gloves.png" class="img-fluid" alt="Перчатки"></button></li>
+                </ul>
+                <h5 class="text-center">
                     Ресурсы в наличии
                 </h5>
                 <sidebar-input v-for="(res, index) in getSidebarRes" @remember="remember" :resource="res" :key="index" />
@@ -286,7 +293,6 @@ export default {
                 ],
             ],
             type: 0,
-            showMenu: true
         };
     },
     methods: {
@@ -307,9 +313,6 @@ export default {
                 this.grade = event;
             }
         },
-        showOffcanvasMenu(bool){
-            this.showMenu = bool;
-        }
     },
     mounted() {
         if(localStorage.armorResources) {

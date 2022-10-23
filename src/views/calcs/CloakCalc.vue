@@ -2,15 +2,15 @@
 <div class="container">
     <div class="row">
         <main class="main">
-            <offcanvas-button @click.prevent="showOffcanvasMenu(true)" />
+            <offcanvas-button @click.prevent="$store.commit('toggleMenu')" />
             <cloak-card v-for="(item, index) in items" @selectGrade="selectGrade" :items="items" :resources="resources" :key="index" :id="index" :grade="grade" />
         </main>
-        <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <aside class="border-start offcanvas offcanvas-end" :class="$store.state.showMenu ? 'show' : ''" :style="{ visibility: $store.state.showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
             <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
                 Плащ с ИБ
             </h4>
-            <button type="button" class="btn-close" @click="isShowSidebar = false" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu(false)"></button>
+            <button type="button" class="btn-close" @click="isShowSidebar = false" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="$store.commit('toggleMenu')"></button>
         </div>
         <div class="offcanvas-body">
             <h5 class="sidebar__title text-center">
@@ -94,7 +94,6 @@ export default {
                     isActive: false,
                 },
             ],
-            showMenu: true,
         };
     },
     methods: {
@@ -115,9 +114,6 @@ export default {
                 this.grade = event;
             }
         },
-        showOffcanvasMenu(bool){
-            this.showMenu = bool;
-        }
     },
     mounted() {
         if(localStorage.cloakResources) {

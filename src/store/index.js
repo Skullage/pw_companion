@@ -9,12 +9,24 @@ export default createStore({
         return {
             blacklist: ['Золото', 'Серебро'],
             classes: [],
+            stats: [],
+            resources: [],
             baseServerUrl: config.UrlAPI,
+            showMenu: true,
         }
     },
     mutations: {
         setClasses(state, response) {
             state.classes = response.data;
+        },
+        setStats(state, response) {
+            state.stats = response.data;
+        },
+        setResources(state, response) {
+            state.resources = response.data;
+        },
+        toggleMenu(state) {
+            state.showMenu = !state.showMenu;
         }
     },
     actions: {
@@ -25,6 +37,24 @@ export default createStore({
             } catch (err) {
                 console.log(err);
                 commit('error/setErrorText', `Не удалось получить список классов`);
+            }
+        },
+        async getStats({commit}, baseServerUrl) {
+            try {
+                const response = await axios.get(baseServerUrl + "stats");
+                commit('setStats', response);
+            } catch (err) {
+                console.log(err);
+                commit('error/setErrorText', `Не удалось получить список статов`);
+            }
+        },
+        async getResources({commit}, baseServerUrl) {
+            try {
+                const response = await axios.get(baseServerUrl + "resources");
+                commit('setResources', response);
+            } catch (err) {
+                console.log(err);
+                commit('error/setErrorText', `Не удалось получить список ресурсов`);
             }
         }
     },

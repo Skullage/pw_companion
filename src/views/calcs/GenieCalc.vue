@@ -20,15 +20,15 @@
                         </select>
                     </div>
                 </div>
-                <offcanvas-button class="offcanvas-btn" @click.prevent="showOffcanvasMenu(true)" />
+                <offcanvas-button class="offcanvas-btn" @click.prevent="$store.commit('toggleMenu')" />
                 <genie-category-group v-for="item in 14" :key="item" :category="item" :skills="data.filter(el => el.category == item)" />
             </main>
-            <aside class="border-start offcanvas offcanvas-end" :class="showMenu ? 'show' : ''" :style="{ visibility: showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <aside class="border-start offcanvas offcanvas-end" :class="$store.state.showMenu ? 'show' : ''" :style="{ visibility: $store.state.showMenu ? 'visible' : 'hidden' }" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
             <div class="offcanvas-header">
                 <h4 class="sidebar__title mb-0" id="offcanvasScrollingLabel">
                     Джинн
                 </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="showOffcanvasMenu(false)"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click.prevent="$store.commit('toggleMenu')"></button>
             </div>
             <div class="offcanvas-body">
                 <div class="form-floating mb-3">
@@ -89,14 +89,10 @@ export default {
     },
     data() {
         return {
-            showMenu: true,
             data: [],
         }
     },
     methods: {
-        showOffcanvasMenu(bool){
-            this.showMenu = bool;
-        },
         async getSkills() {
             try {
                 const response = await axios.get(`${this.$store.state.baseServerUrl}genie_skills`);
