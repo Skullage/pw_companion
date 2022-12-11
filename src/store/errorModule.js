@@ -16,14 +16,9 @@ export const errorModule = {
         },
         clearErrorText(state) {
             state.errorText = [];
-        }
-    },
-    actions: {
-        showError({state, commit}) {
-            commit('setErrorText', state.errorText);
         },
-        closeError({commit}) {
-            commit('clearErrorText');
+        removeError(state, id) {
+            state.errorText.splice(id, 1);
         }
     },
     namespaced: true,

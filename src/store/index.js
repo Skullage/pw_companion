@@ -13,6 +13,7 @@ export default createStore({
             resources: [],
             baseServerUrl: config.UrlAPI,
             showMenu: true,
+            isLogged: localStorage.getItem('jwt') != undefined
         }
     },
     mutations: {
@@ -27,6 +28,9 @@ export default createStore({
         },
         toggleMenu(state) {
             state.showMenu = !state.showMenu;
+        },
+        toggleLogged(state) {
+            state.isLogged = !state.isLogged;
         }
     },
     actions: {

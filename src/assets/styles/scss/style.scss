@@ -30,3 +30,11 @@ html, body {
     display: flex;
     flex-direction: column;
 }
+
+.vs__dropdown-toggle {
+    height: 100%;
+    cursor: pointer!important;
+}
+.vs__search {
+    cursor: pointer;
+}

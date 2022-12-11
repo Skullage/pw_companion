@@ -2,7 +2,6 @@
 <div class="wrapper">
     <error-message v-if="$store.getters['error/errorIsVisible']" />
     <base-header class="header" />
-    <!-- <router-view /> -->
     <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
             <component :is="Component" />
@@ -34,7 +33,6 @@ export default {
 .fade-leave-to {
     opacity: 0
 }
-
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity .5s ease-out;

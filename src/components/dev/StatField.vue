@@ -7,7 +7,7 @@
         class="form-control w-50"
         type="text"
         placeholder="Значение"
-        v-model="modelValue.value"
+        v-model.number="modelValue.value"
         />
         <button class="btn btn-outline-secondary" @click="removeFromArray">Удалить</button>
     </div>
