@@ -1,5 +1,5 @@
 const config = {
-    UrlAPI: 'http://localhost:5000/',
-};
+	UrlAPI: 'http://http://194.58.109.113:5000/'
+}
 
-export default config;
+export default config
